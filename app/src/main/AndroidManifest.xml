@@ -80,7 +80,29 @@
                 android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name="com.history.SportHistoryActivity">
         </activity>
-        <activity android:name="com.history.SportDetailActivity">
+        <activity android:name="com.history.SportDetailActivity" android:screenOrientation="portrait"/>
+
+        <service
+                android:name="com.amap.locationservicedemo.LocationService"
+                android:process=":remote1">
+            <intent-filter>
+                <action android:name="com.amap.locationservicedemo.LocationService"/>
+            </intent-filter>
+        </service>
+        <service
+                android:name="com.amap.locationservicedemo.LocationHelperService"
+                android:process=":remote2">
+            <intent-filter>
+                <action android:name="com.amap.locationservicedemo.LocationHelperService"/>
+            </intent-filter>
+        </service>
+
+        <activity android:name="com.amap.locationservicedemo.JniMainActivity"
+             android:screenOrientation="portrait"
+        />
+        <activity android:name="com.amap.locationservicedemo.JniBroadActivity" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name="com.amap.locationservicedemo.JniMapActivity" android:screenOrientation="portrait">
         </activity>
     </application>
 

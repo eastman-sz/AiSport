@@ -2,6 +2,7 @@ package com.zz.sport.ai
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.amap.locationservicedemo.JniBroadActivity
 import com.history.SportHistoryActivity
 import com.sport.SportActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,6 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         historyBtn.setOnClickListener {
             startActivity<SportHistoryActivity>()
+        }
+
+        jniBtn.setOnClickListener {
+            startActivity<JniBroadActivity>()
         }
     }
 
