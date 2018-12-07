@@ -18,6 +18,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import com.amap.api.location.AMapLocation;
+import com.application.IApplication;
 
 import java.io.File;
 import java.io.FileNotFoundException;

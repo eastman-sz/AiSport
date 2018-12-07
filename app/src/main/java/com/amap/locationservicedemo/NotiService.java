@@ -9,6 +9,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
+import com.application.IApplication;
 
 /**
  * Created by liangchao_suxun on 17/1/16.

@@ -48,6 +48,7 @@ public class LocationService extends NotiService {
      */
     private boolean mIsWifiCloseable = false;
 
+    private GdLocationListenerHelper gdLocationListenerHelper = null;
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
@@ -59,19 +60,24 @@ public class LocationService extends NotiService {
             mWifiAutoCloseDelegate.initOnServiceStarted(getApplicationContext());
         }
 
+        gdLocationListenerHelper = new GdLocationListenerHelper();
+
         startLocation();
 
-        GdLocationListenerHelper.setGdLocationChangeListener(new OnGdLocationChangeListener() {
-            @Override
-            public void onLocationChange(@NotNull LatLngState latLngState, @NotNull AMapLocation location, @NotNull LatLng latLng, float totalDistance, float distancePerLatLng) {
-                if (latLngState == LatLngState.NORMAL){
-                    //正常点
-                    Intent latLngintent = new Intent("latLngInfo");
-                    sendBroadcast(latLngintent.putExtra("latitude" , location.getLatitude())
-                            .putExtra("longitude" , location.getLongitude()));
+        if (null != gdLocationListenerHelper){
+            gdLocationListenerHelper.setGdLocationChangeListener(new OnGdLocationChangeListener() {
+                @Override
+                public void onLocationChange(@NotNull LatLngState latLngState, @NotNull AMapLocation location, @NotNull LatLng latLng, float totalDistance, float distancePerLatLng) {
+                    if (latLngState == LatLngState.NORMAL){
+                        //正常点
+                        Intent latLngintent = new Intent("latLngInfo");
+                        sendBroadcast(latLngintent.putExtra("latitude" , location.getLatitude())
+                                .putExtra("longitude" , location.getLongitude()));
+                    }
                 }
-            }
-        });
+            });
+        }
+
 
         return START_STICKY;
     }
@@ -159,11 +165,14 @@ public class LocationService extends NotiService {
             sendBroadcast(mIntent);
 
             //分解
-            GdLocationListenerHelper.onLocationChanged(aMapLocation);
+            if (null != gdLocationListenerHelper){
+                gdLocationListenerHelper.onLocationChanged(aMapLocation);
+            }
+
         }
     };
 
-    GdLocationListenerHelper GdLocationListenerHelper = new GdLocationListenerHelper();
+
 
 
 }

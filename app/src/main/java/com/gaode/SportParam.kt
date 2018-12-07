@@ -6,7 +6,7 @@ open class SportParam {
 
         var sportId = 0L
 
-        const val accuracy = 1155
+        const val accuracy = 12
 
         const val maxGpsPoints = 600
 
