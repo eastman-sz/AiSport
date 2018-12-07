@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    signingConfigs {
+        smartfuns {
+            keyAlias 'smartfuns'
+            keyPassword 'smartfuns'
+            storeFile file('D:/key_space/smartKey/smartfuns.keystore')
+            storePassword 'smartfuns'
+        }
+    }
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.zz.sport.ai"
+        minSdkVersion 19
+        targetSdkVersion(22)
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.smartfuns
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.smartfuns
+        }
+        debug {
+            signingConfig signingConfigs.smartfuns
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['Libs']
+        }
+    }
+    buildToolsVersion '28.0.3'
+    productFlavors {
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+repositories {
+    flatDir { dirs 'libs' }
+}
+
+ext.anko_version = '0.10.5' //https://github.com/Kotlin/anko
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "org.jetbrains.anko:anko:$anko_version"
+
+    implementation(name: 'commonviewslib', ext: 'aar')
+}
