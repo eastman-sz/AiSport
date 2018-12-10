@@ -1,9 +1,9 @@
 package com.application
 
-import android.app.Application
 import android.content.Context
+import android.support.multidex.MultiDexApplication
 
-class IApplication : Application() {
+class IApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

@@ -4,31 +4,35 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     signingConfigs {
-        smartfuns {
-            keyAlias 'smartfuns'
-            keyPassword 'smartfuns'
-            storeFile file('D:/key_space/smartKey/smartfuns.keystore')
-            storePassword 'smartfuns'
+        smilefuns {
+            keyAlias 'smilefuns'
+            keyPassword 'smilefuns'
+            storeFile file('D:/key_space/zz/smilefuns.jks')
+            storePassword 'smilefuns'
         }
     }
     compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.zz.sport.ai"
         minSdkVersion 19
-        targetSdkVersion(22)
+        targetSdkVersion(26)
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.smartfuns
+        signingConfig signingConfigs.smilefuns
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.smartfuns
+            multiDexEnabled true
+            zipAlignEnabled true
+            signingConfig signingConfigs.smilefuns
         }
         debug {
-            signingConfig signingConfigs.smartfuns
+            signingConfig signingConfigs.smilefuns
         }
     }
     sourceSets {
@@ -36,7 +40,7 @@ android {
             jniLibs.srcDirs = ['Libs']
         }
     }
-    buildToolsVersion '28.0.3'
+
     productFlavors {
     }
 
@@ -63,6 +67,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.anko:anko:$anko_version"
-
     implementation(name: 'commonviewslib', ext: 'aar')
 }

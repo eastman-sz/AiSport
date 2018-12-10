@@ -7,13 +7,12 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
+import com.amap.locationservice.ILocationHelperServiceAIDL;
+import com.amap.locationservice.ILocationServiceAIDL;
 
 /**
- * Created by liangchao_suxun on 17/1/18.
  */
-
 public class LocationHelperService extends Service {
-
 
     private Utils.CloseServiceReceiver mCloseReceiver;
 

@@ -29,7 +29,7 @@ public class PowerManagerUtil {
     /**
      * 最小的唤醒时间间隔，防止频繁唤醒。默认5分钟
      */
-    private long mMinWakupInterval = 5 * 60 * 1000;
+    private long mMinWakupInterval = 10 * 60 * 1000;
 
     /**
      * 内部线程工厂
@@ -99,18 +99,22 @@ public class PowerManagerUtil {
         mInnerThreadFactory.newThread(new Runnable() {
             @Override
             public void run() {
-                if (pm == null) {
-                    pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-                }
+                try {
+                    if (pm == null) {
+                        pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                    }
 
-                if (pmLock != null) { // release
+                    if (pmLock != null) { // release
+                        pmLock.release();
+                        pmLock = null;
+                    }
+
+                    pmLock = pm.newWakeLock(levelAndFlags, "MyTag");
+                    pmLock.acquire();
                     pmLock.release();
-                    pmLock = null;
-                }
+                }catch (Exception e){
 
-                pmLock = pm.newWakeLock(levelAndFlags, "MyTag");
-                pmLock.acquire();
-                pmLock.release();
+                }
             }
         }).start();
     }
