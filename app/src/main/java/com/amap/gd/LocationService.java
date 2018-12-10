@@ -1,31 +1,25 @@
-package com.amap.locationservicedemo;
+package com.amap.gd;
 
 import android.content.Intent;
 import android.util.Log;
-
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.model.LatLng;
+import com.amap.locationservicedemo.*;
 import com.gaode.GdLocationListenerHelper;
 import com.gaode.LatLngState;
 import com.gaode.OnGdLocationChangeListener;
 import org.jetbrains.annotations.NotNull;
-
 /**
  * 包名： com.amap.locationservicedemo
  * <p>
  * 创建时间：2016/10/27
  * 项目名称：LocationServiceDemo
- *
- * @author guibao.ggb
- * @email guibao.ggb@alibaba-inc.com
  * <p>
  * 类说明：后台服务定位
- *
  * <p>
- *     modeified by liangchao , on 2017/01/17
  *     update:
  *     1. 只有在由息屏造成的网络断开造成的定位失败时才点亮屏幕
  *     2. 利用notification机制增加进程优先级
@@ -171,8 +165,4 @@ public class LocationService extends NotiService {
 
         }
     };
-
-
-
-
 }

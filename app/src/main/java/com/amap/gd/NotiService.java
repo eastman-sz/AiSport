@@ -1,15 +1,14 @@
-package com.amap.locationservicedemo;
+package com.amap.gd;
 
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Binder;
-import android.os.IBinder;
-import android.os.RemoteException;
+import android.os.*;
 import android.support.annotation.Nullable;
 import com.amap.locationservice.ILocationHelperServiceAIDL;
 import com.amap.locationservice.ILocationServiceAIDL;
+
 /**
  * Created by liangchao_suxun on 17/1/16.
  * 利用双service进行notification绑定，进而将Service的OOM_ADJ提高到1

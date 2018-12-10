@@ -1,25 +1,18 @@
 /**
  *
  */
-package com.amap.locationservicedemo;
+package com.amap.gd;
 
 import android.app.Notification;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
-
 import com.amap.api.location.AMapLocation;
-import com.application.IApplication;
-import com.util.ILog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -129,10 +122,7 @@ public class Utils {
 
 	public static Intent getExplicitIntent(Context context, Intent implicitIntent) {
 
-		ILog.Companion.e("----------targetSdkVersion---------------:: " + context.getApplicationInfo().targetSdkVersion);
-
 		if (context.getApplicationInfo().targetSdkVersion < Build.VERSION_CODES.LOLLIPOP) {
-            ILog.Companion.e("----------targetSdkVersion----11-----------:: " + context.getApplicationInfo().targetSdkVersion);
 			return implicitIntent;
 		}
 
@@ -141,7 +131,6 @@ public class Utils {
 		List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
 		// Make sure only one match was found
 		if (resolveInfo == null || resolveInfo.size() != 1) {
-            ILog.Companion.e("----------targetSdkVersion----2-----------:: " + (null == implicitIntent ? "空" : "Not"));
 			return null;
 		}
 		// Get component info and create ComponentName
@@ -153,8 +142,6 @@ public class Utils {
 		Intent explicitIntent = new Intent(implicitIntent);
 		// Set the component to be explicit
 		explicitIntent.setComponent(component);
-
-        ILog.Companion.e("----------targetSdkVersion----3-----------:: ");
 		return explicitIntent;
 	}
 
@@ -205,7 +192,7 @@ public class Utils {
 		return Build.MANUFACTURER;
 	}
 
-	private static String CLOSE_BRODECAST_INTENT_ACTION_NAME="com.amap.locationservicedemo.CloseService";
+	private static String CLOSE_BRODECAST_INTENT_ACTION_NAME="com.amap.locationservice.CloseService";
 
 
 	public static Intent getCloseBrodecastIntent() {

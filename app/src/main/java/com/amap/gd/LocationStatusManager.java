@@ -1,8 +1,7 @@
-package com.amap.locationservicedemo;
+package com.amap.gd;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import com.amap.api.location.AMapLocation;
 
 import static android.content.Context.MODE_PRIVATE;

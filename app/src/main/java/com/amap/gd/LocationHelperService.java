@@ -1,4 +1,4 @@
-package com.amap.locationservicedemo;
+package com.amap.gd;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -11,8 +11,11 @@ import com.amap.locationservice.ILocationHelperServiceAIDL;
 import com.amap.locationservice.ILocationServiceAIDL;
 
 /**
+ * Created by liangchao_suxun on 17/1/18.
  */
+
 public class LocationHelperService extends Service {
+
 
     private Utils.CloseServiceReceiver mCloseReceiver;
 
@@ -43,7 +46,7 @@ public class LocationHelperService extends Service {
 
     private ServiceConnection mInnerConnection;
     private void startBind() {
-        final String locationServiceName = "com.amap.locationservicedemo.LocationService";
+        final String locationServiceName = "com.amap.locationservice.LocationService";
         mInnerConnection = new ServiceConnection() {
 
             @Override

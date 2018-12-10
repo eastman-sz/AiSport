@@ -1,4 +1,4 @@
-package com.amap.locationservicedemo;
+package com.amap.gd;
 
 import android.content.Context;
 

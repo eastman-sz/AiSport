@@ -138,21 +138,6 @@
                 android:name="com.history.SportDetailActivity"
                 android:screenOrientation="portrait"/>
 
-        <service
-                android:name="com.amap.locationservicedemo.LocationService"
-                android:process=":remote1">
-            <intent-filter>
-                <action android:name="com.amap.locationservicedemo.LocationService"/>
-            </intent-filter>
-        </service>
-        <service
-                android:name="com.amap.locationservicedemo.LocationHelperService"
-                android:process=":remote2">
-            <intent-filter>
-                <action android:name="com.amap.locationservicedemo.LocationHelperService"/>
-            </intent-filter>
-        </service>
-
         <activity
                 android:name="com.amap.locationservicedemo.JniMainActivity"
                 android:screenOrientation="portrait"/>
@@ -166,8 +151,23 @@
         </activity>
         <activity android:name="com.permission.LocationPermissionActivity">
         </activity>
-        <activity android:name="com.base.BaseAppCompatActivityActivity">
-        </activity>
+        <activity android:name="com.base.BaseAppCompatActivityActivity"/>
+
+
+        <service
+                android:name="com.amap.gd.LocationService"
+                android:process=":remote1">
+            <intent-filter>
+                <action android:name="com.amap.locationservice.LocationService"></action>
+            </intent-filter>
+        </service>
+        <service
+                android:name="com.amap.gd.LocationHelperService"
+                android:process=":remote2">
+            <intent-filter>
+                <action android:name="com.amap.locationservice.LocationHelperService"></action>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

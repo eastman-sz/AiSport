@@ -1,12 +1,10 @@
-package com.amap.locationservicedemo;
+package com.amap.gd;
 
 import android.content.Context;
-
 import com.amap.api.location.AMapLocation;
-
+import com.util.ILog;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 /**
  * Created by liangchao_suxun on 17/1/19.
  */
@@ -21,6 +19,8 @@ public class WifiAutoCloseDelegate implements IWifiAutoCloseDelegate {
     @Override
     public boolean isUseful(Context context) {
         String manName = Utils.getManufacture(context);
+        //samsung
+        ILog.Companion.e("-----------手机品牌-----------------：" + manName);
         Pattern pattern = Pattern.compile("xiaomi", Pattern.CASE_INSENSITIVE);
         Matcher m = pattern.matcher(manName);
         return m.find();

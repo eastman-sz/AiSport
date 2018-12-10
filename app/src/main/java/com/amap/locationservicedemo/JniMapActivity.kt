@@ -4,6 +4,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.amap.api.maps.model.LatLng
+import com.amap.gd.LocationService
+import com.amap.gd.Utils
 import com.gaode.GdMapDrawHelper
 import com.zz.sport.ai.R
 import kotlinx.android.synthetic.main.activity_jni_map.*
@@ -40,7 +42,7 @@ class JniMapActivity : AppCompatActivity() {
      * 开始定位服务
      */
     private fun startLocationService() {
-        applicationContext.startService(Intent(this, LocationService::class.java))
+        startService(Intent(this, LocationService::class.java))
     }
 
     /**
