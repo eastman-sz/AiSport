@@ -13,7 +13,6 @@ import com.gaode.LatLngState;
 import com.gaode.OnGdLocationChangeListener;
 import org.jetbrains.annotations.NotNull;
 /**
- * 包名： com.amap.locationservicedemo
  * <p>
  * 创建时间：2016/10/27
  * 项目名称：LocationServiceDemo
@@ -28,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 public class LocationService extends NotiService {
 
     private AMapLocationClient mLocationClient;
-    private AMapLocationClientOption mLocationOption;
 
     private int locationCount;
 
@@ -98,7 +96,7 @@ public class LocationService extends NotiService {
             mLocationClient = new AMapLocationClient(this.getApplicationContext());
         }
 
-        mLocationOption = new AMapLocationClientOption();
+        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
         // 使用连续
         mLocationOption.setOnceLocation(false);
         mLocationOption.setLocationCacheEnable(false);
