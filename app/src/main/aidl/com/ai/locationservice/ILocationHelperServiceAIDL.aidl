@@ -1,5 +1,5 @@
 // ILocationHelperServiceAIDL.aidl
-package com.amap.locationservice;
+package com.ai.locationservice;
 
 // Declare any non-default types here with import statements
 

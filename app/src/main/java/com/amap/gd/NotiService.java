@@ -6,9 +6,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.*;
 import android.support.annotation.Nullable;
-import com.amap.locationservice.ILocationHelperServiceAIDL;
-import com.amap.locationservice.ILocationServiceAIDL;
-
+import com.ai.locationservice.ILocationHelperServiceAIDL;
+import com.ai.locationservice.ILocationServiceAIDL;
 /**
  * Created by liangchao_suxun on 17/1/16.
  * 利用双service进行notification绑定，进而将Service的OOM_ADJ提高到1
@@ -44,7 +43,7 @@ public class NotiService extends Service {
     }
 
 
-    private final String mHelperServiceName = "com.amap.locationservice.LocationHelperService";
+    private final String mHelperServiceName = "com.ai.locationservice.LocationHelperService";
     /**
      * 触发利用notification增加进程优先级
      */

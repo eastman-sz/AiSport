@@ -158,14 +158,14 @@
                 android:name="com.amap.gd.LocationService"
                 android:process=":locationService">
             <intent-filter>
-                <action android:name="com.amap.locationservice.LocationService"></action>
+                <action android:name="com.ai.locationservice.LocationService"></action>
             </intent-filter>
         </service>
         <service
                 android:name="com.amap.gd.LocationHelperService"
                 android:process=":locationHelperService">
             <intent-filter>
-                <action android:name="com.amap.locationservice.LocationHelperService"></action>
+                <action android:name="com.ai.locationservice.LocationHelperService"></action>
             </intent-filter>
         </service>
     </application>

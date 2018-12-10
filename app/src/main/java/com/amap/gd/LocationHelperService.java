@@ -7,8 +7,8 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
-import com.amap.locationservice.ILocationHelperServiceAIDL;
-import com.amap.locationservice.ILocationServiceAIDL;
+import com.ai.locationservice.ILocationHelperServiceAIDL;
+import com.ai.locationservice.ILocationServiceAIDL;
 
 /**
  * Created by liangchao_suxun on 17/1/18.
@@ -46,7 +46,7 @@ public class LocationHelperService extends Service {
 
     private ServiceConnection mInnerConnection;
     private void startBind() {
-        final String locationServiceName = "com.amap.locationservice.LocationService";
+        final String locationServiceName = "com.ai.locationservice.LocationService";
         mInnerConnection = new ServiceConnection() {
 
             @Override
