@@ -24,6 +24,10 @@ class GdMapDrawHelper {
     private var polylineOptions: PolylineOptions? = null
     //收到的Gps点的个数，因为在地图上画点太多，会引起页面卡顿,控制在300个点为宜
     private var gpsPointCount = 0
+    //应用是否处于前台显示
+    private var onAppForeground = true
+    //处于后台时的gps点
+    private val bpLatLngs = ArrayList<LatLng>()
 
     constructor(aMap : AMap){
         this.aMap = aMap
@@ -45,13 +49,34 @@ class GdMapDrawHelper {
                 latLngs.clear()
             }
         }
-        latLngs.add(latLng)
-        val size = latLngs.size
-        if (1 == size) {
-            //画起点
-            drawStartPoint(latLng)
+
+        if (onAppForeground){
+            //前台时的处理
+            latLngs.add(latLng)
+            val size = latLngs.size
+            if (1 == size) {
+                //画起点
+                drawStartPoint(latLng)
+                return
+            }
+
+            if (!bpLatLngs.isEmpty()){
+                latLngs.addAll( 1 , bpLatLngs)
+            }
+        }else{
+            //如果一直没有获得过GPS点
+            if (latLngs.isEmpty()){
+                latLngs.add(latLng)
+                drawStartPoint(latLng)
+            }else{
+
+                bpLatLngs.add(latLng)
+            }
             return
         }
+
+        val size = latLngs.size
+
         //最多只保留两个位置点
         if (size > 2) {
             latLngs.removeAt(0)
@@ -59,6 +84,20 @@ class GdMapDrawHelper {
         //两点可画线
         drawTraceLine(latLngs)
         drawEndPoint(latLng)
+
+        //后台点大于0
+        if (bpLatLngs.size > 0){
+            bpLatLngs.clear()
+
+            val lastLatlng = latLngs[latLngs.size - 1]
+            latLngs.clear()
+            latLngs.add(lastLatlng)
+        }
+    }
+
+    //应用是否处于前台显示
+    fun setAppForeground(isAppForeground : Boolean){
+        this.onAppForeground = isAppForeground
     }
 
     private fun init(){

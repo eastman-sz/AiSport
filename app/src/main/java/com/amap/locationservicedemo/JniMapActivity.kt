@@ -56,11 +56,13 @@ class JniMapActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         mapView.onResume()
+        gdMapDrawHelper?.setAppForeground(true)
     }
 
     override fun onPause() {
         super.onPause()
         mapView.onPause()
+        gdMapDrawHelper?.setAppForeground(false)
     }
 
     override fun onLowMemory() {
