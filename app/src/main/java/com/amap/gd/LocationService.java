@@ -11,6 +11,10 @@ import com.amap.locationservicedemo.*;
 import com.gaode.GdLocationListenerHelper;
 import com.gaode.LatLngState;
 import com.gaode.OnGdLocationChangeListener;
+import com.gaode.SportParam;
+import com.sportdata.GpsInfoDbHelper;
+import com.sportdata.SportInfoDbHelper;
+import com.util.ILog;
 import org.jetbrains.annotations.NotNull;
 /**
  * <p>
@@ -42,6 +46,10 @@ public class LocationService extends NotiService {
 
     private GdLocationListenerHelper gdLocationListenerHelper = null;
 
+    private Intent latLngIntent = new Intent("latLngInfo");
+    //运动ID
+    private long sportId = 0;
+
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
@@ -51,6 +59,15 @@ public class LocationService extends NotiService {
             mIsWifiCloseable = true;
             mWifiAutoCloseDelegate.initOnServiceStarted(getApplicationContext());
         }
+
+        //SportId
+        if (0 == sportId){
+            sportId = System.currentTimeMillis()/1000;
+        }
+        SportParam.Companion.setSportId(sportId);
+        SportInfoDbHelper.Companion.onStart();
+        //send
+        SportBroadcastHelper.Companion.sendSportId(SportParam.Companion.getSportId());
 
         gdLocationListenerHelper = new GdLocationListenerHelper();
 
@@ -62,27 +79,31 @@ public class LocationService extends NotiService {
                 public void onLocationChange(@NotNull LatLngState latLngState, @NotNull AMapLocation location, @NotNull LatLng latLng, float totalDistance, float distancePerLatLng) {
                     if (latLngState == LatLngState.NORMAL){
                         //正常点
-                        Intent latLngintent = new Intent("latLngInfo");
-                        sendBroadcast(latLngintent.putExtra("latitude" , location.getLatitude())
+                        sendBroadcast(latLngIntent.putExtra("latitude" , location.getLatitude())
                                 .putExtra("longitude" , location.getLongitude()));
+
+                        ILog.Companion.e("-----------保存GPS点信息--------------------:: " + SportParam.Companion.getSportId());
+                        //send
+                        SportBroadcastHelper.Companion.sendSportId(SportParam.Companion.getSportId());
+                        //保存GPS点
+                        GpsInfoDbHelper.Companion.save(location);
                     }
                 }
             });
         }
 
-
         return START_STICKY;
     }
-
-
-
-
 
     @Override
     public void onDestroy() {
         unApplyNotiKeepMech();
         stopLocation();
+        //结束运动记录
+        SportInfoDbHelper.Companion.onFinish();
 
+        //调用stopSelf()会重置LocationService里的变量
+        stopSelf();
         super.onDestroy();
     }
 

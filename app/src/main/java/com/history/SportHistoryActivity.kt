@@ -2,6 +2,7 @@ package com.history
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.sportdata.GpsInfoDbHelper
 import com.sportdata.SportInfo
 import com.sportdata.SportInfoDbHelper
 import com.zz.sport.ai.R
@@ -27,9 +28,21 @@ class SportHistoryActivity : AppCompatActivity() {
 
         listView.adapter = adapter
 
-        adapter?.onCommonItemClickListener = object : OnCommonItemClickListener<SportInfo>{
-            override fun onClick(it: SportInfo) {
+        adapter?.onCommonAdapterClickListener = object : OnCommonAdapterClickListener<SportInfo>(){
+            override fun onMainItemClick(it: SportInfo) {
                 startActivity<SportDetailActivity>("sportId" to  it.sportId)
+            }
+            override fun onSubItemClick(item: Int) {
+                runOnUiThread {
+                    SportInfoDbHelper.delete(list[item].sportId)
+                    GpsInfoDbHelper.delete(list[item].sportId)
+
+                    list.removeAt(item)
+                    adapter?.notifyDataSetChanged()
+
+
+
+                }
             }
         }
     }

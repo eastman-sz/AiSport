@@ -17,6 +17,9 @@ class GpsInfoDbHelper {
     companion object {
 
         fun save(location: AMapLocation){
+            if (0L == SportParam.sportId){
+                return
+            }
             val values = ContentValues()
             values.put("bearing" , location.bearing)
             values.put("speed" , location.speed)
@@ -63,6 +66,10 @@ class GpsInfoDbHelper {
                 cursor?.close()
             }
             return list
+        }
+
+        fun delete(sportId : Long){
+            ISqliteDataBase.getSqLiteDatabase().delete(DBNAME, "sportId = ? " , arrayOf(sportId.toString()))
         }
 
         private fun fromCursor(cursor: Cursor) : TraceLocation{

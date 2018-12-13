@@ -7,6 +7,10 @@ import com.amap.api.maps.model.LatLng
 import com.amap.gd.LocationService
 import com.amap.gd.Utils
 import com.gaode.GdMapDrawHelper
+import com.gaode.SportParam
+import com.sportdata.SportInfo
+import com.sportdata.SportInfoDbHelper
+import com.util.ILog
 import com.zz.sport.ai.R
 import kotlinx.android.synthetic.main.activity_jni_map.*
 
@@ -24,10 +28,21 @@ class JniMapActivity : AppCompatActivity() {
 
         mapView.onCreate(savedInstanceState)
 
+
+        //用于判断异常退出后，是否重绘轨迹
+        if (SportParam.sportId == 0L){
+            val latestUnCompleteSportId = SportInfoDbHelper.getLatestUnCompleteSportId()
+            if (latestUnCompleteSportId > 0L){
+                SportParam.sportId = latestUnCompleteSportId
+            }
+        }
+
         gdMapDrawHelper = GdMapDrawHelper(mapView.map)
 
         latLngBroadcastReceive.onLatLngReceiveListener = object : OnLatLngReceiveListener{
             override fun onReceive(latLng: LatLng) {
+
+                ILog.e("-----------收到GPS点信息--------------------:: " + SportParam.sportId)
 
                 runOnUiThread {
                     gdMapDrawHelper?.drawLine(latLng , 0)
@@ -74,7 +89,19 @@ class JniMapActivity : AppCompatActivity() {
         latLngBroadcastReceive.unRegister()
         super.onDestroy()
         mapView.onDestroy()
-        stopLocationService()
+        //stopLocationService()
+        SportParam.sportId = 0
+    }
+
+    private var pressTimestamp = 0L
+
+    override fun onBackPressed() {
+        val timestamp = System.currentTimeMillis()
+        if (timestamp - pressTimestamp < 2000){
+            stopLocationService()
+            super.onBackPressed()
+        }
+        pressTimestamp = timestamp
     }
 
 }

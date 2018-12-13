@@ -5,6 +5,8 @@ import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
 import com.application.IApplication
+import com.sportdata.GpsInfoDbHelper
+import com.util.ILog
 import com.zz.sport.ai.R
 import java.util.ArrayList
 
@@ -50,32 +52,18 @@ class GdMapDrawHelper {
             }
         }
 
-        if (onAppForeground){
-            //前台时的处理
-            latLngs.add(latLng)
-            val size = latLngs.size
-            if (1 == size) {
-                //画起点
-                drawStartPoint(latLng)
-                return
-            }
-
-            if (!bpLatLngs.isEmpty()){
-                latLngs.addAll( 1 , bpLatLngs)
-            }
-        }else{
-            //如果一直没有获得过GPS点
-            if (latLngs.isEmpty()){
-                latLngs.add(latLng)
-                drawStartPoint(latLng)
-            }else{
-
-                bpLatLngs.add(latLng)
-            }
+        if (!onAppForeground){
+            //当App处于后台时，停止在地图上绘轨迹
             return
         }
 
+        latLngs.add(latLng)
         val size = latLngs.size
+        if (1 == size) {
+            //画起点
+            drawStartPoint(latLng)
+            return
+        }
 
         //最多只保留两个位置点
         if (size > 2) {
@@ -84,20 +72,15 @@ class GdMapDrawHelper {
         //两点可画线
         drawTraceLine(latLngs)
         drawEndPoint(latLng)
-
-        //后台点大于0
-        if (bpLatLngs.size > 0){
-            bpLatLngs.clear()
-
-            val lastLatlng = latLngs[latLngs.size - 1]
-            latLngs.clear()
-            latLngs.add(lastLatlng)
-        }
     }
 
     //应用是否处于前台显示
     fun setAppForeground(isAppForeground : Boolean){
         this.onAppForeground = isAppForeground
+        //重回前台时，重绘轨迹
+        if (this.onAppForeground){
+            reDrawTrace()
+        }
     }
 
     private fun init(){
@@ -181,7 +164,53 @@ class GdMapDrawHelper {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
 
+    //清空后重绘轨迹
+    private fun reDrawTrace(){
+        if (null == aMap) {
+            return
+        }
+        try {
+            ILog.e("--------------清空后重绘轨迹-------------------: ${SportParam.sportId}")
+
+            val allLatLngs = GpsInfoDbHelper.getLatLng(SportParam.sportId)
+
+            ILog.e("--------------清空后重绘轨迹-------------------size: ${allLatLngs.size}")
+
+            if (allLatLngs.isEmpty()){
+                return
+            }
+            aMap?.clear()
+
+            val size = allLatLngs.size
+
+            if (1 == size){
+                //画起点
+                drawStartPoint(allLatLngs[0])
+                return
+            }
+            //画起点
+//            drawStartPoint(allLatLngs[0])
+            //画轨迹
+//            drawTraceLine(allLatLngs)
+            //画终点
+//            drawEndPoint(allLatLngs[size - 1])
+
+            startPointMarker = null
+            endPointMarker = null
+
+            //重新赋值
+            latLngs.clear()
+            allLatLngs.forEach {
+                drawLine(it , 0)
+            }
+
+//            latLngs.add(allLatLngs[size - 1])
+
+        }catch (e : Exception){
+            e.printStackTrace()
+        }
     }
 
 

@@ -6,12 +6,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import com.amap.api.maps.model.LatLng
 import com.application.IApplication
+import com.gaode.SportParam
 
 class LatLngBroadcastReceive : BroadcastReceiver {
 
     var onLatLngReceiveListener : OnLatLngReceiveListener ?= null
 
     private val latLngAction = "latLngInfo"
+    private val actionSportId = "actionSportId"
 
     constructor(){
         register()
@@ -20,6 +22,7 @@ class LatLngBroadcastReceive : BroadcastReceiver {
     private fun register(){
         val intentFilter = IntentFilter()
         intentFilter.addAction(latLngAction)
+        intentFilter.addAction(actionSportId)
         IApplication.context?.registerReceiver(this , intentFilter)
     }
 
@@ -29,6 +32,10 @@ class LatLngBroadcastReceive : BroadcastReceiver {
 
     override fun onReceive(context: Context, intent: Intent) {
         when(intent.action){
+            actionSportId ->{
+                SportParam.sportId = intent.getLongExtra("sportId" , 0)
+            }
+
             latLngAction ->{
                 val latitude = intent.getDoubleExtra("latitude" , 0.0)
                 val longitude = intent.getDoubleExtra("longitude" , 0.0)

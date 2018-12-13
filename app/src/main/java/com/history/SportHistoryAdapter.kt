@@ -2,21 +2,27 @@ package com.history
 
 import android.content.Context
 import android.view.View
+import android.widget.LinearLayout
 import com.common.base.CustomFontDigitTextView
+import com.common.base.CustomFontTextView
 import com.common.base.IBaseAdapter
 import com.common.base.ViewHolder
+import com.common.swipe.SwipeMenuLayoutA
 import com.sportdata.SportInfo
 import com.utils.lib.ss.common.DateHepler
 import com.zz.sport.ai.R
 
 class SportHistoryAdapter : IBaseAdapter<SportInfo> {
 
-    var onCommonItemClickListener : OnCommonItemClickListener<SportInfo> ?= null
+    var onCommonAdapterClickListener : OnCommonAdapterClickListener<SportInfo> ?= null
 
     constructor(context: Context , list: List<SportInfo>) : super(context, list, R.layout.sport_history_adapter)
 
     override fun getConvertView(conterView: View, list: List<SportInfo>, position: Int) {
+        val swipeMenuLayoutA = ViewHolder.getView<SwipeMenuLayoutA>(conterView , R.id.swipeMenuLayoutA)
+        val infoLayout = ViewHolder.getView<LinearLayout>(conterView , R.id.infoLayout)
         val infoTextView = ViewHolder.getView<CustomFontDigitTextView>(conterView , R.id.infoTextView)
+        val delBtnTextView = ViewHolder.getView<CustomFontTextView>(conterView , R.id.delBtnTextView)
 
         val sportInfo = list[position]
         val startTime = sportInfo.startTime
@@ -34,8 +40,13 @@ class SportHistoryAdapter : IBaseAdapter<SportInfo> {
 
         infoTextView.text = info
 
-        conterView.setOnClickListener {
-            onCommonItemClickListener?.onClick(sportInfo)
+        infoLayout.setOnClickListener {
+            onCommonAdapterClickListener?.onMainItemClick(sportInfo)
+        }
+
+        delBtnTextView.setOnClickListener {
+            swipeMenuLayoutA.quickClose()
+            onCommonAdapterClickListener?.onSubItemClick(position)
         }
 
     }
