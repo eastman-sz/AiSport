@@ -5,6 +5,7 @@ import com.amap.api.trace.LBSTraceClient
 import com.amap.api.trace.TraceListener
 import com.amap.api.trace.TraceLocation
 import com.application.IApplication
+import com.util.ILog
 
 class LBSTraceHelper {
 
@@ -19,10 +20,10 @@ class LBSTraceHelper {
                     onTraceListener?.onFinished(lineID , linepoints , distance , waitingtime)
                 }
                 override fun onRequestFailed(lineID: Int, errorInfo: String) {
-
+                        ILog.e("-------轨迹纠正失败------------------:$errorInfo")
                 }
                 override fun onTraceProcessing(lineID: Int, index: Int, segments: List<LatLng>) {
-
+                    ILog.e("-------轨迹纠正进行中------------------:$index  $lineID")
                 }
             })
         }

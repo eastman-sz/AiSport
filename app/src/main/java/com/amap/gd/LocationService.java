@@ -15,6 +15,7 @@ import com.gaode.SportParam;
 import com.sportdata.GpsInfoDbHelper;
 import com.sportdata.SportInfoDbHelper;
 import com.util.ILog;
+import com.util.ScheduleRun;
 import org.jetbrains.annotations.NotNull;
 /**
  * <p>
@@ -46,9 +47,25 @@ public class LocationService extends NotiService {
 
     private GdLocationListenerHelper gdLocationListenerHelper = null;
 
-    private Intent latLngIntent = new Intent("latLngInfo");
     //运动ID
     private long sportId = 0;
+    //计时器
+    private ScheduleRun scheduleRun = new ScheduleRun(1);
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        scheduleRun.setScheduleRunListener(new ScheduleRun.ScheduleRunListener() {
+            @Override
+            public void onTimeFlip(int count, int leftCount) {
+                ILog.Companion.e("--------时长-------------: " + count);
+                //发送
+                SportBroadcastHelper.Companion.sendDuration(count);
+            }
+        });
+        scheduleRun.start();
+    }
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
@@ -79,8 +96,7 @@ public class LocationService extends NotiService {
                 public void onLocationChange(@NotNull LatLngState latLngState, @NotNull AMapLocation location, @NotNull LatLng latLng, float totalDistance, float distancePerLatLng) {
                     if (latLngState == LatLngState.NORMAL){
                         //正常点
-                        sendBroadcast(latLngIntent.putExtra("latitude" , location.getLatitude())
-                                .putExtra("longitude" , location.getLongitude()));
+                        SportBroadcastHelper.Companion.sendLatLng(location.getLatitude() , location.getLongitude() , totalDistance);
 
                         ILog.Companion.e("-----------保存GPS点信息--------------------:: " + SportParam.Companion.getSportId());
                         //send
@@ -99,6 +115,7 @@ public class LocationService extends NotiService {
     public void onDestroy() {
         unApplyNotiKeepMech();
         stopLocation();
+        scheduleRun.stop();
         //结束运动记录
         SportInfoDbHelper.Companion.onFinish();
 

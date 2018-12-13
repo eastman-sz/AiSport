@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        tools:context=".MainActivity"
+        android:orientation="horizontal"
+        android:background="@color/sfs_c1"
+>
+    <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+    >
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/transparent"
+                android:layout_centerInParent="true"
+        >
+            <com.common.base.CustomFontDigitTextView
+                    android:id="@+id/durationTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/sfs_s8"
+                    android:textColor="@color/sfs_c5"
+                    android:text="--"
+            />
+
+            <com.common.base.CustomFontTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/sfs_s4"
+                    android:textColor="@color/sfs_c5"
+                    android:text="时长"
+                    android:layout_marginTop="5dp"
+            />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+    >
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/transparent"
+                android:layout_centerInParent="true"
+        >
+            <com.common.base.CustomFontDigitTextView
+                    android:id="@+id/distanceTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/sfs_s8"
+                    android:textColor="@color/sfs_c5"
+                    android:text="--"
+            />
+
+            <com.common.base.CustomFontTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/sfs_s4"
+                    android:textColor="@color/sfs_c5"
+                    android:text="距离"
+                    android:layout_marginTop="5dp"
+            />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

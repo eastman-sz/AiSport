@@ -8,7 +8,6 @@ import com.amap.gd.LocationService
 import com.amap.gd.Utils
 import com.gaode.GdMapDrawHelper
 import com.gaode.SportParam
-import com.sportdata.SportInfo
 import com.sportdata.SportInfoDbHelper
 import com.util.ILog
 import com.zz.sport.ai.R
@@ -39,13 +38,20 @@ class JniMapActivity : AppCompatActivity() {
 
         gdMapDrawHelper = GdMapDrawHelper(mapView.map)
 
-        latLngBroadcastReceive.onLatLngReceiveListener = object : OnLatLngReceiveListener{
-            override fun onReceive(latLng: LatLng) {
+        latLngBroadcastReceive.onLatLngReceiveListener = object : OnLatLngReceiveListener(){
+            override fun onReceive(latLng: LatLng , distance : Float) {
 
                 ILog.e("-----------收到GPS点信息--------------------:: " + SportParam.sportId)
 
                 runOnUiThread {
                     gdMapDrawHelper?.drawLine(latLng , 0)
+
+                    simpleSportDataView.setDistance(distance)
+                }
+            }
+            override fun onDurationChg(duration: Int) {
+                runOnUiThread {
+                    simpleSportDataView.setDuration(duration)
                 }
             }
         }
@@ -72,12 +78,14 @@ class JniMapActivity : AppCompatActivity() {
         super.onResume()
         mapView.onResume()
         gdMapDrawHelper?.setAppForeground(true)
+        simpleSportDataView.setAppForeground(true)
     }
 
     override fun onPause() {
         super.onPause()
         mapView.onPause()
         gdMapDrawHelper?.setAppForeground(false)
+        simpleSportDataView.setAppForeground(false)
     }
 
     override fun onLowMemory() {

@@ -39,17 +39,25 @@ class SportDetailActivity : AppCompatActivity() {
 
             ILog.e("---轨迹返回-: ${points.size}   ${traceList.size}")
 
-            LBSTraceHelper.startTrace(traceList , object : OnTraceListener{
-                override fun onFinished(lineID: Int, linePoints: List<LatLng>, distance: Int, waitingtime: Int) {
-
-                    ILog.e("---轨迹返回-: ${points.size}   ${traceList.size}    ${linePoints.size}  distance: $distance  waitingtime: $waitingtime")
-
-                    uiThread {
-                        resultMapHelper.setPoints(linePoints)
-                    }
+            if (traceList.size > 50){
+                uiThread {
+                    resultMapHelper.setPoints(points)
                 }
-            })
 
+            }else{
+
+                LBSTraceHelper.startTrace(traceList , object : OnTraceListener{
+                    override fun onFinished(lineID: Int, linePoints: List<LatLng>, distance: Int, waitingtime: Int) {
+
+                        ILog.e("---轨迹返回-: ${points.size}   ${traceList.size}    ${linePoints.size}  distance: $distance  waitingtime: $waitingtime")
+
+                        uiThread {
+                            resultMapHelper.setPoints(linePoints)
+                        }
+                    }
+
+                })
+            }
         }
     }
 

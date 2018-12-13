@@ -2,8 +2,9 @@ package com.amap.locationservicedemo
 
 import com.amap.api.maps.model.LatLng
 
-interface OnLatLngReceiveListener {
+open class OnLatLngReceiveListener {
 
-    fun onReceive(latLng : LatLng)
+    open fun onReceive(latLng : LatLng , distance : Float){}
 
+    open fun onDurationChg(duration: Int){}
 }
