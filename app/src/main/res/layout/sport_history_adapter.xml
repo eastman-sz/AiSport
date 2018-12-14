@@ -72,7 +72,7 @@
 
     <com.common.base.CustomFontTextView
             android:id="@+id/delBtnTextView"
-            android:layout_width="60dp"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
             android:background="@color/sfs_c3"
             android:text="删除"
