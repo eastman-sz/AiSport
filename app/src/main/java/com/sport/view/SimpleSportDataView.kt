@@ -7,6 +7,7 @@ import com.base.BaseKotlinRelativeLayout
 import com.gaode.SportParam
 import com.sportdata.SportInfoDbHelper
 import com.util.DateUtil
+import com.util.ILog
 import com.utils.lib.ss.common.MathUtil
 import com.zz.sport.ai.R
 import kotlinx.android.synthetic.main.simple_sport_data_view.view.*
@@ -47,6 +48,9 @@ class SimpleSportDataView : BaseKotlinRelativeLayout {
         this.onAppForeground = onAppForeground
 
         val distance = SportInfoDbHelper.getSports(SportParam.sportId).distance
+
+        ILog.e("-------恢复--------:: ${SportParam.sportId}  $distance")
+
         setDistance(distance)
     }
 

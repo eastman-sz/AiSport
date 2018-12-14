@@ -17,7 +17,7 @@ public class MusicHelper {
         try {
             player.reset();
 
-            AssetFileDescriptor file = IApplication.Companion.getContext().getResources().openRawResourceFd(R.raw.beep);
+            AssetFileDescriptor file = IApplication.Companion.getContext().getResources().openRawResourceFd(R.raw.slient);
             player.setDataSource(file.getFileDescriptor(),
                     file.getStartOffset(), file.getLength());
             player.prepare();
