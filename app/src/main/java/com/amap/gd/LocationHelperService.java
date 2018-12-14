@@ -9,6 +9,7 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import com.ai.locationservice.ILocationHelperServiceAIDL;
 import com.ai.locationservice.ILocationServiceAIDL;
+import com.amap.locationservicedemo.MusicHelper;
 
 /**
  * Created by liangchao_suxun on 17/1/18.
@@ -16,6 +17,8 @@ import com.ai.locationservice.ILocationServiceAIDL;
 
 public class LocationHelperService extends Service {
 
+    //MediaPlayer
+    private MusicHelper musicHelper = new MusicHelper();
 
     private Utils.CloseServiceReceiver mCloseReceiver;
 
@@ -25,9 +28,10 @@ public class LocationHelperService extends Service {
         startBind();
         mCloseReceiver = new Utils.CloseServiceReceiver(this);
         registerReceiver(mCloseReceiver, Utils.getCloseServiceFilter());
+
+        //启动播放
+        musicHelper.play();
     }
-
-
 
     @Override
     public void onDestroy() {
@@ -40,7 +44,8 @@ public class LocationHelperService extends Service {
             unregisterReceiver(mCloseReceiver);
             mCloseReceiver = null;
         }
-
+        //销毁
+        musicHelper.destroy();
         super.onDestroy();
     }
 

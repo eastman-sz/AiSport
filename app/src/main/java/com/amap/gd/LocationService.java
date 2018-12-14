@@ -53,6 +53,8 @@ public class LocationService extends NotiService {
     //计时器
     private ScheduleRun scheduleRun = new ScheduleRun(1);
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -68,6 +70,7 @@ public class LocationService extends NotiService {
             }
         });
         scheduleRun.start();
+
     }
 
     @Override
