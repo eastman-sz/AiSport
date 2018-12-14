@@ -30,7 +30,7 @@ public class LocationHelperService extends Service {
         registerReceiver(mCloseReceiver, Utils.getCloseServiceFilter());
 
         //启动播放
-        musicHelper.play();
+//        musicHelper.play();
     }
 
     @Override
