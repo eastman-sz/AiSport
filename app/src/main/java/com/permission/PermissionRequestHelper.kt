@@ -19,22 +19,6 @@ class PermissionRequestHelper {
             PermissionConfig.onLocationPermissionRequestListener = onLocationPermissionRequestListener
             context.startActivity<LocationPermissionActivity>()
         }
-
-        fun requestSportPermissions(context: Activity){
-            val hasAccessFineLocationPermission = PermissionHelper.hasAccessFineLocationPermission(context)
-            val hasReadPhoneStatePermission = PermissionHelper.hasReadPhoneStatePermission(context)
-            val list = ArrayList<String>()
-            if (!hasAccessFineLocationPermission){
-                list.add(Manifest.permission.ACCESS_FINE_LOCATION)
-            }
-            if (!hasReadPhoneStatePermission){
-                list.add(Manifest.permission.READ_PHONE_STATE)
-            }
-            var permissions: Array<String>? = arrayOf()
-            list.toArray(permissions)
-
-            ActivityCompat.requestPermissions(context, permissions!!, 1570)
-        }
     }
 
 }

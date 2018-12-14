@@ -15,7 +15,7 @@ class LocationPermissionActivity : Activity() {
             finish()
             return
         }
-        PermissionRequestHelper.requestSportPermissions(this)
+        PermissionHelper.requestSportPermissions(this)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

@@ -24,6 +24,22 @@ class SportInfoDbHelper {
             }
         }
 
+        fun onUpdate(){
+            val values = ContentValues()
+            values.put("sportId" , SportParam.sportId)
+            values.put("endTime" , System.currentTimeMillis()/1000)
+
+            ISqliteDataBase.getSqLiteDatabase().update(DBNAME , values , "sportId = ? " , arrayOf(SportParam.sportId.toString()))
+        }
+
+        fun onUpdateDistance(distance : Double){
+            val values = ContentValues()
+            values.put("sportId" , SportParam.sportId)
+            values.put("distance" , distance)
+
+            ISqliteDataBase.getSqLiteDatabase().update(DBNAME , values , "sportId = ? " , arrayOf(SportParam.sportId.toString()))
+        }
+
         fun onFinish(){
             val values = ContentValues()
             values.put("sportId" , SportParam.sportId)
@@ -51,7 +67,7 @@ class SportInfoDbHelper {
             return list
         }
 
-        fun getSports(sportId : Long) : List<SportInfo>{
+        fun getSports(sportId : Long) : SportInfo{
             val list = ArrayList<SportInfo>()
             var cursor : Cursor ?= null
             try {
@@ -66,7 +82,7 @@ class SportInfoDbHelper {
             }finally {
                 cursor?.close()
             }
-            return list
+            return if (list.isEmpty()) SportInfo() else list[0]
         }
 
         //最后一次未完成的ID。最后一条数据，是否已完成
@@ -100,16 +116,17 @@ class SportInfoDbHelper {
             val startTime = CursorHelper.getLong(cursor , "startTime")
             val endTime = CursorHelper.getLong(cursor , "endTime")
             val complete = CursorHelper.getInt(cursor , "complete")
+            val distance = CursorHelper.getFloat(cursor , "distance")
 
             val sportInfo = SportInfo()
             sportInfo.sportId = sportId
             sportInfo.startTime = startTime
             sportInfo.endTime = endTime
             sportInfo.complete = complete
+            sportInfo.distance = distance
 
             return sportInfo
         }
-
 
         private const val DBNAME = "sportInfo"
 
@@ -119,6 +136,7 @@ class SportInfoDbHelper {
                 .addColumn_Long("startTime")
                 .addColumn_Long("endTime")
                 .addColumn_Integer("complete")
+                .addColumn_Float("distance")
                 .buildTable(db)
         }
 

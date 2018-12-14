@@ -6,6 +6,7 @@ class SportInfo {
     var startTime = 0L
     var endTime = 0L
     var complete = 0
+    var distance = 0F
 
 
 }

@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import com.base.BaseKotlinRelativeLayout
+import com.gaode.SportParam
+import com.sportdata.SportInfoDbHelper
 import com.util.DateUtil
 import com.utils.lib.ss.common.MathUtil
 import com.zz.sport.ai.R
@@ -33,7 +35,6 @@ class SimpleSportDataView : BaseKotlinRelativeLayout {
         if (onAppForeground){
             durationTextView.text = if (0 == duration) "--" else DateUtil.secondsFormatHours1(duration)
         }
-
     }
 
     fun setDistance(distance : Float){
@@ -44,6 +45,9 @@ class SimpleSportDataView : BaseKotlinRelativeLayout {
 
     fun setAppForeground(onAppForeground : Boolean){
         this.onAppForeground = onAppForeground
+
+        val distance = SportInfoDbHelper.getSports(SportParam.sportId).distance
+        setDistance(distance)
     }
 
 }

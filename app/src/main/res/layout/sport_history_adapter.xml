@@ -13,22 +13,24 @@
         app:swipeEnable="true"
         android:id="@+id/swipeMenuLayoutA"
 >
-    <LinearLayout
+    <RelativeLayout
             android:id="@+id/infoLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:orientation="vertical"
+            android:background="@drawable/list_item_bg"
     >
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/list_item_bg"
+                android:background="@color/transparent"
+                android:layout_centerInParent="true"
         >
             <com.common.base.CustomFontDigitTextView
                     android:id="@+id/infoTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical|left"
                     android:paddingLeft="15dp"
                     android:textSize="@dimen/sfs_s4"
@@ -36,22 +38,47 @@
                     android:lineSpacingExtra="1dp"
                     android:lineSpacingMultiplier="1.2"
             />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/transparent"
+                    android:layout_marginLeft="15dp"
+            >
+                <com.common.base.CustomFontDigitTextView
+                        android:id="@+id/distanceTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9"
+                        android:textSize="@dimen/sfs_s12"
+                        android:textColor="@color/sfs_c5"
+                />
+                <com.common.base.CustomFontTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="公里"
+                        android:textSize="@dimen/sfs_s4"
+                        android:textColor="@color/sfs_c5"
+                        android:layout_marginLeft="4dp"
+                />
+
+            </LinearLayout>
+
         </LinearLayout>
 
-        <ImageView style="@style/full_line_style"/>
-    </LinearLayout>
+        <ImageView style="@style/full_line_style" android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
     <com.common.base.CustomFontTextView
             android:id="@+id/delBtnTextView"
             android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:background="@color/sfs_c3"
             android:text="删除"
             android:gravity="center"
             android:textSize="@dimen/sfs_s4"
             android:textColor="@color/sfs_c1"
     />
-
-
 
 </com.common.swipe.SwipeMenuLayoutA>

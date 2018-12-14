@@ -13,6 +13,7 @@ import com.gaode.LatLngState;
 import com.gaode.OnGdLocationChangeListener;
 import com.gaode.SportParam;
 import com.sportdata.GpsInfoDbHelper;
+import com.sportdata.SportInfo;
 import com.sportdata.SportInfoDbHelper;
 import com.util.ILog;
 import com.util.ScheduleRun;
@@ -62,6 +63,8 @@ public class LocationService extends NotiService {
                 ILog.Companion.e("--------时长-------------: " + count);
                 //发送
                 SportBroadcastHelper.Companion.sendDuration(count);
+                //更新
+                SportInfoDbHelper.Companion.onUpdate();
             }
         });
         scheduleRun.start();
@@ -103,6 +106,8 @@ public class LocationService extends NotiService {
                         SportBroadcastHelper.Companion.sendSportId(SportParam.Companion.getSportId());
                         //保存GPS点
                         GpsInfoDbHelper.Companion.save(location);
+                        //更新距离
+                        SportInfoDbHelper.Companion.onUpdateDistance(totalDistance);
                     }
                 }
             });

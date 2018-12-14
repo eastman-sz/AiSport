@@ -12,21 +12,21 @@
     <Button
             android:id="@+id/sportBtn"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="46dp"
             android:text="运动"
     />
 
     <Button
             android:id="@+id/historyBtn"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="46dp"
             android:text="记录"
     />
 
     <Button
             android:id="@+id/jniBtn"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="46dp"
             android:text="JNI"
     />
 
