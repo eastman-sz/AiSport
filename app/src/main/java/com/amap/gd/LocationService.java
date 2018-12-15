@@ -46,7 +46,7 @@ public class LocationService extends NotiService {
      */
     private boolean mIsWifiCloseable = false;
 
-    private GdLocationListenerHelper gdLocationListenerHelper = null;
+    private GdLocationListenerHelper gdLocationListenerHelper = new GdLocationListenerHelper();
 
     //运动ID
     private long sportId = 0;
@@ -63,7 +63,7 @@ public class LocationService extends NotiService {
         scheduleRun.setScheduleRunListener(new ScheduleRun.ScheduleRunListener() {
             @Override
             public void onTimeFlip(int count, int leftCount) {
-                ILog.Companion.e("--------时长-------------: " + count);
+                ILog.Companion.e("--------时长-------------: " + count +  "  : " + sportId);
                 //发送
                 SportBroadcastHelper.Companion.sendDuration(count);
                 //更新
@@ -72,6 +72,24 @@ public class LocationService extends NotiService {
         });
         scheduleRun.start();
 
+        gdLocationListenerHelper.setGdLocationChangeListener(new OnGdLocationChangeListener() {
+            @Override
+            public void onLocationChange(@NotNull LatLngState latLngState, @NotNull AMapLocation location, @NotNull LatLng latLng, float totalDistance, float distancePerLatLng) {
+                if (latLngState == LatLngState.NORMAL){
+                    float newDistance = lastDistance + totalDistance;
+                    //正常点
+                    SportBroadcastHelper.Companion.sendLatLng(location.getLatitude() , location.getLongitude() , newDistance);
+
+                    ILog.Companion.e("-----------保存GPS点信息--------------------:: " + SportParam.Companion.getSportId()  + "    totalDistance: " + totalDistance);
+                    //send
+                    SportBroadcastHelper.Companion.sendSportId(SportParam.Companion.getSportId());
+                    //保存GPS点
+                    GpsInfoDbHelper.Companion.save(location);
+                    //更新距离
+                    SportInfoDbHelper.Companion.onUpdateDistance(newDistance);
+                }
+            }
+        });
     }
 
     @Override
@@ -84,40 +102,23 @@ public class LocationService extends NotiService {
             mWifiAutoCloseDelegate.initOnServiceStarted(getApplicationContext());
         }
 
+        ILog.Companion.e("----------服务唤起--------------: " + sportId);
+
         //SportId
         if (0 == sportId){
             sportId = System.currentTimeMillis()/1000;
         }
-        lastDistance = SportInfoDbHelper.Companion.getSports(sportId).getDistance();
+//        lastDistance = SportInfoDbHelper.Companion.getSports(sportId).getDistance();
+
+        ILog.Companion.e("----------服务唤起-0-------------: " + lastDistance);
 
         SportParam.Companion.setSportId(sportId);
         SportInfoDbHelper.Companion.onStart();
         //send
         SportBroadcastHelper.Companion.sendSportId(SportParam.Companion.getSportId());
 
-        gdLocationListenerHelper = new GdLocationListenerHelper();
-
         startLocation();
 
-        if (null != gdLocationListenerHelper){
-            gdLocationListenerHelper.setGdLocationChangeListener(new OnGdLocationChangeListener() {
-                @Override
-                public void onLocationChange(@NotNull LatLngState latLngState, @NotNull AMapLocation location, @NotNull LatLng latLng, float totalDistance, float distancePerLatLng) {
-                    if (latLngState == LatLngState.NORMAL){
-                        //正常点
-                        SportBroadcastHelper.Companion.sendLatLng(location.getLatitude() , location.getLongitude() , lastDistance + totalDistance);
-
-                        ILog.Companion.e("-----------保存GPS点信息--------------------:: " + SportParam.Companion.getSportId());
-                        //send
-                        SportBroadcastHelper.Companion.sendSportId(SportParam.Companion.getSportId());
-                        //保存GPS点
-                        GpsInfoDbHelper.Companion.save(location);
-                        //更新距离
-                        SportInfoDbHelper.Companion.onUpdateDistance(totalDistance);
-                    }
-                }
-            });
-        }
 
         return START_STICKY;
     }
@@ -197,7 +198,7 @@ public class LocationService extends NotiService {
             } else {
                 sb.append(Utils.getLocationStr(aMapLocation));
             }
-            Log.e("location" , "----------定位信息--------------: " + sb.toString());
+//            Log.e("location" , "----------定位信息--------------: " + sb.toString());
 
             Intent mIntent = new Intent(JniMainActivity.RECEIVER_ACTION);
             mIntent.putExtra("result", sb.toString());
