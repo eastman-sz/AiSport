@@ -52,9 +52,6 @@ public class LocationService extends NotiService {
     private long sportId = 0;
     //计时器
     private ScheduleRun scheduleRun = new ScheduleRun(1);
-    //上次的距离
-    private float lastDistance = 0;
-
 
     @Override
     public void onCreate() {
@@ -76,9 +73,8 @@ public class LocationService extends NotiService {
             @Override
             public void onLocationChange(@NotNull LatLngState latLngState, @NotNull AMapLocation location, @NotNull LatLng latLng, float totalDistance, float distancePerLatLng) {
                 if (latLngState == LatLngState.NORMAL){
-                    float newDistance = lastDistance + totalDistance;
                     //正常点
-                    SportBroadcastHelper.Companion.sendLatLng(location.getLatitude() , location.getLongitude() , newDistance);
+                    SportBroadcastHelper.Companion.sendLatLng(location.getLatitude() , location.getLongitude() , totalDistance);
 
                     ILog.Companion.e("-----------保存GPS点信息--------------------:: " + SportParam.Companion.getSportId()  + "    totalDistance: " + totalDistance);
                     //send
@@ -86,7 +82,7 @@ public class LocationService extends NotiService {
                     //保存GPS点
                     GpsInfoDbHelper.Companion.save(location);
                     //更新距离
-                    SportInfoDbHelper.Companion.onUpdateDistance(newDistance);
+                    SportInfoDbHelper.Companion.onUpdateDistance(totalDistance);
                 }
             }
         });
@@ -108,9 +104,6 @@ public class LocationService extends NotiService {
         if (0 == sportId){
             sportId = System.currentTimeMillis()/1000;
         }
-//        lastDistance = SportInfoDbHelper.Companion.getSports(sportId).getDistance();
-
-        ILog.Companion.e("----------服务唤起-0-------------: " + lastDistance);
 
         SportParam.Companion.setSportId(sportId);
         SportInfoDbHelper.Companion.onStart();
