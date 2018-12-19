@@ -1,9 +1,7 @@
 package com.permission
 
-import android.Manifest
-import android.app.Activity
 import android.content.Context
-import android.support.v4.app.ActivityCompat
+import com.util.GpsHelper
 import org.jetbrains.anko.startActivity
 
 class PermissionRequestHelper {
@@ -12,7 +10,8 @@ class PermissionRequestHelper {
 
         fun requestSportPermission(context: Context , onLocationPermissionRequestListener : OnLocationPermissionRequestListener?){
             val hasPermission = PermissionHelper.hasSportPermission(context)
-            if (hasPermission){
+            val gpsIsOpen = GpsHelper.gpsIsOpen(context)
+            if (hasPermission && gpsIsOpen){
                 onLocationPermissionRequestListener?.onGranted()
                 return
             }

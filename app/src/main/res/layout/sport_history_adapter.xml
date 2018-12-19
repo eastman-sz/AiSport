@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.common.swipe.SwipeMenuLayoutA
+<com.common.swipe.SwipeMenuLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="vertical"
-            android:background="@drawable/list_item_bg"
+            android:background="@drawable/list_item_selector"
     >
         <LinearLayout
                 android:layout_width="match_parent"
@@ -81,4 +81,4 @@
             android:textColor="@color/sfs_c1"
     />
 
-</com.common.swipe.SwipeMenuLayoutA>
+</com.common.swipe.SwipeMenuLayout>

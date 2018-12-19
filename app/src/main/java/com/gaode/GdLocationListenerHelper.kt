@@ -47,7 +47,7 @@ class GdLocationListenerHelper {
             }
             //位置变化后计算两点间的距离
             val distance = AMapUtils.calculateLineDistance(latLng, latLngList[0])
-            if (distance == 0.0f) {//位置没有变化或者GPS点出现异常
+            if (distance == 0.0f || distance < 0.08) {//位置没有变化或者GPS点出现异常
                 return
             }
 

@@ -7,7 +7,7 @@ import com.common.base.CustomFontDigitTextView
 import com.common.base.CustomFontTextView
 import com.common.base.IBaseAdapter
 import com.common.base.ViewHolder
-import com.common.swipe.SwipeMenuLayoutA
+import com.common.swipe.SwipeMenuLayout
 import com.sportdata.SportInfo
 import com.utils.lib.ss.common.DateHepler
 import com.utils.lib.ss.common.MathUtil
@@ -20,7 +20,7 @@ class SportHistoryAdapter : IBaseAdapter<SportInfo> {
     constructor(context: Context , list: List<SportInfo>) : super(context, list, R.layout.sport_history_adapter)
 
     override fun getConvertView(conterView: View, list: List<SportInfo>, position: Int) {
-        val swipeMenuLayoutA = ViewHolder.getView<SwipeMenuLayoutA>(conterView , R.id.swipeMenuLayoutA)
+        val swipeMenuLayoutA = ViewHolder.getView<SwipeMenuLayout>(conterView , R.id.swipeMenuLayoutA)
         val infoLayout = ViewHolder.getView<RelativeLayout>(conterView , R.id.infoLayout)
         val infoTextView = ViewHolder.getView<CustomFontDigitTextView>(conterView , R.id.infoTextView)
         val distanceTextView = ViewHolder.getView<CustomFontDigitTextView>(conterView , R.id.distanceTextView)
