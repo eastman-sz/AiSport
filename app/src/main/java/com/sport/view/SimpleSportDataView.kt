@@ -44,6 +44,12 @@ class SimpleSportDataView : BaseKotlinRelativeLayout {
         }
     }
 
+    fun setPace(pace : Int){
+        if (onAppForeground){
+            paceTextView.text = if (0 == pace) "--" else DateUtil.seconds2RunningPace(pace)
+        }
+    }
+
     fun setAppForeground(onAppForeground : Boolean){
         this.onAppForeground = onAppForeground
 

@@ -10,6 +10,8 @@ class SportBroadcastHelper {
         private val sportIdIntent = Intent("actionSportId")
         private val durationIntent = Intent("sportDuration")
         private val latLngIntent = Intent("latLngInfo")
+        private val pitchIntent = Intent("pitchInfo")
+        private val paceIntent = Intent("paceInfo")
 
         fun sendSportId(sportId : Long){
             IApplication.context?.sendBroadcast(sportIdIntent.putExtra("sportId" , sportId))
@@ -25,6 +27,14 @@ class SportBroadcastHelper {
                     .putExtra("longitude", longitude)
                     .putExtra("distance" , distance)
             )
+        }
+
+        fun sendCurPitch(pitch : Int){
+            IApplication.context?.sendBroadcast(pitchIntent.putExtra("pitch" , pitch))
+        }
+
+        fun sendPace(pace : Int){
+            IApplication.context?.sendBroadcast(paceIntent.putExtra("pace" , pace))
         }
 
 

@@ -8,6 +8,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.model.LatLng;
 import com.amap.locationservicedemo.*;
+import com.cal.SportDataCalHelper;
 import com.gaode.GdLocationListenerHelper;
 import com.gaode.LatLngState;
 import com.gaode.OnGdLocationChangeListener;
@@ -15,6 +16,8 @@ import com.gaode.SportParam;
 import com.sportdata.GpsInfoDbHelper;
 import com.sportdata.SportInfo;
 import com.sportdata.SportInfoDbHelper;
+import com.stepcounter.OnSensorChangeListener;
+import com.stepcounter.StepDetectorHelper;
 import com.util.ILog;
 import com.util.ScheduleRun;
 import org.jetbrains.annotations.NotNull;
@@ -52,6 +55,10 @@ public class LocationService extends NotiService {
     private long sportId = 0;
     //计时器
     private ScheduleRun scheduleRun = new ScheduleRun(1);
+    //计算器
+    private SportDataCalHelper sportDataCalHelper = new SportDataCalHelper();
+    //计步器
+    private StepDetectorHelper stepDetectorHelper = null;
 
     @Override
     public void onCreate() {
@@ -65,6 +72,9 @@ public class LocationService extends NotiService {
                 SportBroadcastHelper.Companion.sendDuration(count);
                 //更新
                 SportInfoDbHelper.Companion.onUpdate();
+                //更新每公里信息
+                sportDataCalHelper.onDurationChange(count);
+
             }
         });
         scheduleRun.start();
@@ -83,6 +93,18 @@ public class LocationService extends NotiService {
                     GpsInfoDbHelper.Companion.save(location);
                     //更新距离
                     SportInfoDbHelper.Companion.onUpdateDistance(totalDistance);
+                    //更新每公里信息
+                    sportDataCalHelper.onDistanceChange(totalDistance , latLng);
+                }
+            }
+        });
+
+        stepDetectorHelper = new StepDetectorHelper(getApplicationContext());
+        stepDetectorHelper.setOnSensorChangeListener(new OnSensorChangeListener() {
+            @Override
+            public void onChange(int type, int value) {
+                if (2 == type){
+                    sportDataCalHelper.onStepsChange(value);
                 }
             }
         });
@@ -126,6 +148,8 @@ public class LocationService extends NotiService {
 
         //调用stopSelf()会重置LocationService里的变量
         stopSelf();
+        //停止计步器
+        stepDetectorHelper.onStop();
         super.onDestroy();
     }
 

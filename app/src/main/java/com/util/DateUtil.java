@@ -90,4 +90,46 @@ public class DateUtil {
         return DateHepler.timestampFormat(timestamp , "MM-dd");
     }
 
+    /**
+     * 配速转换。
+     * @param secondsPerKm 一KM需要多少秒
+     * @return 相应格式的字符串
+     */
+    public static String seconds2RunningPace(int secondsPerKm){
+        int totalSeconds = secondsPerKm;
+        int minutes = 0;
+        int second = 0;
+        minutes = totalSeconds/60;
+        second = totalSeconds%60;
+
+        String text = "--";
+        if (0 == minutes) {
+            if (0 != second) {
+                if (second < 10) {
+                    text = "0"+ second + "\"";
+                }else {
+                    text = second + "\"";
+                }
+            }
+        }else {
+            String minTxt = null;
+            if (minutes < 10) {
+                minTxt = "0"+ minutes + "\'" ;
+            }else {
+                minTxt = minutes + "\'" ;
+            }
+
+            if (0 == second) {
+                text = minTxt + "00" + "\"";
+            }else {
+                if (second < 10) {
+                    text = minTxt + "0"+second + "\"";
+                }else {
+                    text = minTxt + second + "\"";
+                }
+            }
+        }
+        return text;
+    }
+
 }

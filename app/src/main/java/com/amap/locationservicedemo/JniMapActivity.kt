@@ -54,6 +54,12 @@ class JniMapActivity : AppCompatActivity() {
                     simpleSportDataView.setDuration(duration)
                 }
             }
+
+            override fun onPaceChg(pace: Int) {
+                runOnUiThread {
+                    simpleSportDataView.setPace(pace)
+                }
+            }
         }
 
         startLocationService()

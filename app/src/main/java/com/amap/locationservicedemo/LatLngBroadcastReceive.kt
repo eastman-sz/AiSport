@@ -15,6 +15,8 @@ class LatLngBroadcastReceive : BroadcastReceiver {
     private val latLngAction = "latLngInfo"
     private val actionSportId = "actionSportId"
     private val sportDuration = "sportDuration"
+    private val pitchInfo = "pitchInfo"
+    private val paceInfo = "paceInfo"
 
     constructor(){
         register()
@@ -25,6 +27,8 @@ class LatLngBroadcastReceive : BroadcastReceiver {
         intentFilter.addAction(latLngAction)
         intentFilter.addAction(actionSportId)
         intentFilter.addAction(sportDuration)
+        intentFilter.addAction(pitchInfo)
+        intentFilter.addAction(paceInfo)
         IApplication.context?.registerReceiver(this , intentFilter)
     }
 
@@ -57,6 +61,17 @@ class LatLngBroadcastReceive : BroadcastReceiver {
 
             }
 
+            pitchInfo ->{
+                val pitch = intent.getIntExtra("pitch" , 0)
+
+                onLatLngReceiveListener?.onPitchChg(pitch)
+            }
+
+            paceInfo ->{
+                val pace = intent.getIntExtra("pace" , 0)
+
+                onLatLngReceiveListener?.onPaceChg(pace)
+            }
         }
     }
 

@@ -78,4 +78,40 @@
         </LinearLayout>
     </RelativeLayout>
 
+
+    <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+    >
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/transparent"
+                android:layout_centerInParent="true"
+        >
+            <com.common.base.CustomFontDigitTextView
+                    android:id="@+id/paceTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/sfs_s8"
+                    android:textColor="@color/sfs_c5"
+                    android:text="--"
+            />
+
+            <com.common.base.CustomFontTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/sfs_s4"
+                    android:textColor="@color/sfs_c5"
+                    android:text="配速"
+                    android:layout_marginTop="5dp"
+            />
+        </LinearLayout>
+    </RelativeLayout>
+
 </LinearLayout>

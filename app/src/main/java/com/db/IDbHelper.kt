@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.application.IApplication
 import com.sportdata.GpsInfoDbHelper
+import com.sportdata.KmInfoDbHelper
 import com.sportdata.SportInfoDbHelper
 
 class IDbHelper : SQLiteOpenHelper {
@@ -13,11 +14,13 @@ class IDbHelper : SQLiteOpenHelper {
     override fun onCreate(db: SQLiteDatabase) {
         SportInfoDbHelper.createTable(db)
         GpsInfoDbHelper.createTable(db)
+        KmInfoDbHelper.createTable(db)
 
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         SportInfoDbHelper.dropTable(db)
         GpsInfoDbHelper.dropTable(db)
+        KmInfoDbHelper.dropTable(db)
     }
 }
