@@ -149,8 +149,10 @@
                 android:name="com.amap.locationservicedemo.JniMapActivity"
                 android:screenOrientation="portrait">
         </activity>
-        <activity android:name="com.permission.LocationPermissionActivity">
-        </activity>
+        <activity android:name="com.permission.LocationPermissionActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
         <activity android:name="com.base.BaseAppCompatActivityActivity"/>
 
 

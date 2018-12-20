@@ -23,19 +23,12 @@ class LocationPermissionActivity : Activity() {
             finish()
             return
         }
-        if (gpsIsOpen){
-            PermissionHelper.requestSportPermissions(this)
-        }else{
-            //Open gps
-            GpsHelper.openGps(this)
-        }
 
+        gpsAndPermissionCheck()
 
     }
 
-    override fun onRestart() {
-        super.onRestart()
-
+    private fun gpsAndPermissionCheck(){
         //判断GPS是否开启
         val gpsIsOpen = GpsHelper.gpsIsOpen(this)
         if (gpsIsOpen){
@@ -64,6 +57,11 @@ class LocationPermissionActivity : Activity() {
                 }
             })
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        gpsAndPermissionCheck()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
