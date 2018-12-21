@@ -13,6 +13,7 @@ import org.jetbrains.anko.uiThread
 
 class SportDetailActivity : AppCompatActivity() {
 
+    var sportId = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +24,11 @@ class SportDetailActivity : AppCompatActivity() {
         mapView.onCreate(savedInstanceState)
 
         initViews()
+        initListeners()
     }
 
     private fun initViews(){
-        val sportId = intent.getLongExtra("sportId" , 0)
+        sportId = intent.getLongExtra("sportId" , 0)
         if (sportId == 0L){
             finish()
             return
@@ -58,6 +60,14 @@ class SportDetailActivity : AppCompatActivity() {
 
                 })
             }
+        }
+    }
+
+    private fun initListeners(){
+        detailTextView.setOnClickListener {
+            val dialog = SportDetailDialog(this)
+            dialog.show()
+            dialog.setSportId(sportId)
         }
     }
 

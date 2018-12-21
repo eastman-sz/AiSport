@@ -52,7 +52,7 @@ class SportDataCalHelper {
     private fun calPace(){
         val kmMeters = nextKm*1000
         if (distance >= kmMeters){
-            val curKm = (distance/kmMeters).toInt()
+            val curKm = (distance/1000).toInt()
             nextKm = curKm + 1
 
             //当前一公时的时长

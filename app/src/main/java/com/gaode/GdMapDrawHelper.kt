@@ -7,6 +7,7 @@ import com.amap.api.maps.model.*
 import com.application.IApplication
 import com.sportdata.GpsInfoDbHelper
 import com.util.ILog
+import com.utils.lib.ss.info.DeviceInfo
 import com.zz.sport.ai.R
 import java.util.ArrayList
 
@@ -28,8 +29,6 @@ class GdMapDrawHelper {
     private var gpsPointCount = 0
     //应用是否处于前台显示
     private var onAppForeground = true
-    //处于后台时的gps点
-    private val bpLatLngs = ArrayList<LatLng>()
 
     constructor(aMap : AMap){
         this.aMap = aMap
@@ -98,7 +97,7 @@ class GdMapDrawHelper {
         endPointOverlayOptions = MarkerOptions().icon(endDescriptor).draggable(false)
         //画线的色值
         val lineColor = IApplication.context?.resources!!.getColor(R.color.c18)
-        polylineOptions = PolylineOptions().width(8f).color(lineColor)
+        polylineOptions = PolylineOptions().width(DeviceInfo.dip2px(IApplication.context, 5f).toFloat()).color(lineColor)
     }
 
     //画起点
