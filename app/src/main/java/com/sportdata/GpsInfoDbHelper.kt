@@ -68,6 +68,24 @@ class GpsInfoDbHelper {
             return list
         }
 
+        fun getGpsInfo(sportId : Long) : List<GpsInfo>{
+            val list = ArrayList<GpsInfo>()
+            var cursor : Cursor ?= null
+            try {
+                cursor = ISqliteDataBase.getSqLiteDatabase().query(DBNAME , null , "sportId = ?" , arrayOf(sportId.toString()) , null ,null, null)
+                cursor?.let {
+                    while (it.moveToNext()){
+                        list.add(gpsInfoFromCursor(it))
+                    }
+                }
+            }catch (e : Exception){
+                e.printStackTrace()
+            }finally {
+                cursor?.close()
+            }
+            return list
+        }
+
         fun delete(sportId : Long){
             ISqliteDataBase.getSqLiteDatabase().delete(DBNAME, "sportId = ? " , arrayOf(sportId.toString()))
         }
@@ -88,6 +106,24 @@ class GpsInfoDbHelper {
             traceLocation.time = time
 
             return traceLocation
+        }
+
+        private fun gpsInfoFromCursor(cursor: Cursor) : GpsInfo{
+            val bearing = CursorHelper.getFloat(cursor , "bearing")
+            val speed = CursorHelper.getFloat(cursor , "speed")
+            val accuracy = CursorHelper.getFloat(cursor , "accuracy")
+            val latitude = CursorHelper.getDouble(cursor , "latitude")
+            val longitude = CursorHelper.getDouble(cursor , "longitude")
+            val time = CursorHelper.getLong(cursor , "time")
+
+            val gpsInfo = GpsInfo()
+            gpsInfo.bearing = bearing
+            gpsInfo.speed = speed
+            gpsInfo.latitude = latitude
+            gpsInfo.longitude = longitude
+            gpsInfo.time = time
+
+            return gpsInfo
         }
 
         private fun latLngFromCursor(cursor: Cursor) : LatLng{

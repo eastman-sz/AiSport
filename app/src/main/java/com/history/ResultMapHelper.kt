@@ -7,8 +7,13 @@ import com.amap.api.maps.model.*
 import com.amap.api.maps.utils.SpatialRelationUtil
 import com.amap.api.maps.utils.overlay.SmoothMoveMarker
 import com.application.IApplication
+import com.sportdata.GpsInfo
+import com.util.ILog
 import com.utils.lib.ss.info.DeviceInfo
 import com.zz.sport.ai.R
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import java.util.*
 
 class ResultMapHelper {
 
@@ -24,13 +29,9 @@ class ResultMapHelper {
         if (points.size < 2){
             return
         }
-        val ooPolyline = PolylineOptions().width(DeviceInfo.dip2px(IApplication.context, 5f).toFloat())
-            .addAll(points)
-            .color(IApplication.context!!.resources.getColor(R.color.c18))
-            .useGradient(true)
-            .zIndex(10f)
 
-        aMap?.addPolyline(ooPolyline)
+//        val ooPolyline = polylineOptions(points)
+//        aMap?.addPolyline(ooPolyline)
         //画起点
         setStartPoint(points[0])
         //画终点
@@ -41,6 +42,115 @@ class ResultMapHelper {
 //        smoothMove(points)
     }
 
+    fun setPointsN(points : List<GpsInfo>){
+        if (points.size < 2){
+            return
+        }
+        val list = ArrayList<LatLng>()
+        points.forEach {
+            list.add(it.newLatLng())
+        }
+
+        setPoints(list)
+
+        //将异常线画为虚线
+        newLines(points)
+    }
+
+    //将异常线画为虚线
+    //两点之间时长过长，判定为异常点，两点之间画虚线
+    private fun newLines(points : List<GpsInfo>){
+        doAsync {
+            //异常Gps点
+            val list = ArrayList<List<LatLng>>()
+            var subList = ArrayList<LatLng>()
+
+            //正常Gps点
+            val list0 = LinkedList<List<LatLng>>()
+            var subList0 = LinkedList<LatLng>()
+
+            val size = points.size -1
+            for (i in 0 until size){
+                val f = points[i].time
+                val s = points[i + 1].time
+                val timeDiff = s - f
+
+                ILog.e("----------两点之间的时间差------------: $timeDiff")
+
+                if (timeDiff > 30000){
+                    if (subList.isEmpty()){
+                        subList.add(points[i].newLatLng())
+                        subList.add(points[i + 1].newLatLng())
+                    }else{
+                        subList.add(points[i + 1].newLatLng())
+                    }
+
+                    //正常Gps点
+                    if (!subList0.isEmpty()){
+                        list0.add(subList0)
+                        subList0 = LinkedList()
+                    }
+                }else{
+                    if (!subList.isEmpty()){
+                        list.add(subList)
+                        subList = ArrayList()
+                    }
+
+                    //正常Gps点
+                    if (subList0.isEmpty()){
+                        subList0.add(points[i].newLatLng())
+                        subList0.add(points[i + 1].newLatLng())
+                    }else{
+                        subList0.add(points[i + 1].newLatLng())
+                    }
+
+                }
+            }
+            list.add(subList)
+            list0.add(subList0)
+
+            ILog.e("----------两点之间的时间差-O-----------: ${list.size}")
+
+            uiThread {
+                list.forEach {
+                    val ooPolyline = newPolylineOptions(it)
+                    aMap?.addPolyline(ooPolyline)
+                }
+
+                //正常Gps点
+                list0.forEach {
+                    if (it.size >= 2){
+                        val ooPolyline = polylineOptions(it)
+                        aMap?.addPolyline(ooPolyline)
+                    }
+
+                    ILog.e("----------正常点-O-----------: ${it.size}")
+                }
+            }
+        }
+    }
+
+    //正常Gps点边线
+    private fun polylineOptions(points: List<LatLng>) : PolylineOptions{
+        return  PolylineOptions().width(DeviceInfo.dip2px(IApplication.context, 5f).toFloat())
+                .addAll(points)
+                .color(IApplication.context!!.resources.getColor(R.color.c18))
+                .useGradient(true)
+                .zIndex(10f)
+    }
+
+    //异常Gps点边线
+    private fun newPolylineOptions(points: List<LatLng>) : PolylineOptions{
+        return PolylineOptions().width(DeviceInfo.dip2px(IApplication.context, 5f).toFloat())
+               .addAll(points)
+               .color(IApplication.context!!.resources.getColor(R.color.sfs_c2))
+               .useGradient(true)
+               .setDottedLine(true)
+               .zIndex(10f)
+    }
+
+
+    //画起点
     private fun setStartPoint(latLng: LatLng) {
         val endDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.map_start_point_icon)
         val ooA = MarkerOptions().position(latLng).icon(endDescriptor)
@@ -48,6 +158,7 @@ class ResultMapHelper {
         aMap?.addMarker(ooA)
     }
 
+    //画终点
     private fun setEndPoint(latLng: LatLng) {
         val endDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.map_end_point_icon)
         val ooA = MarkerOptions().position(latLng).icon(endDescriptor)

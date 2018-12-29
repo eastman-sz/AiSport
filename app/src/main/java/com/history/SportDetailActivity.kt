@@ -41,9 +41,12 @@ class SportDetailActivity : AppCompatActivity() {
 
             ILog.e("---轨迹返回-: ${points.size}   ${traceList.size}")
 
+            val gpsInfo = GpsInfoDbHelper.getGpsInfo(sportId)
+
             if (traceList.size > 50){
                 uiThread {
-                    resultMapHelper.setPoints(points)
+//                    resultMapHelper.setPoints(points)
+                    resultMapHelper.setPointsN(gpsInfo)
                 }
 
             }else{
