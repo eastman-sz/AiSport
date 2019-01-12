@@ -77,7 +77,7 @@ class ResultMapHelper {
 
                 ILog.e("----------两点之间的时间差------------: $timeDiff")
 
-                if (timeDiff > 30000){
+                if (timeDiff > 40000){
                     if (subList.isEmpty()){
                         subList.add(points[i].newLatLng())
                         subList.add(points[i + 1].newLatLng())

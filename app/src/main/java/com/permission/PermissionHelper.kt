@@ -27,11 +27,11 @@ class PermissionHelper {
             ActivityCompat.requestPermissions(activity, permissions, 1570)
         }
 
-        fun hasAccessFineLocationPermission(context: Context) : Boolean{
+        private fun hasAccessFineLocationPermission(context: Context) : Boolean{
             return hasPermission(context , Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
-        fun hasReadPhoneStatePermission(context: Context) : Boolean{
+        private fun hasReadPhoneStatePermission(context: Context) : Boolean{
             return hasPermission(context , Manifest.permission.READ_PHONE_STATE)
         }
 
