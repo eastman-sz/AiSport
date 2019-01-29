@@ -12,7 +12,7 @@ class SportDataCalHelper {
     private var duration = 0
     private var distance = 0.0
     //配速:一公里把需要的时间
-    private var pace = 0
+    var pace = 0
     //上一公里时所花费的时长
     private var lastKmDuration = 0
     //上一公里计算时的距离(有可能公里不是连续的)

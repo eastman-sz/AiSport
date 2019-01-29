@@ -32,6 +32,23 @@ class GpsInfoDbHelper {
             ISqliteDataBase.getSqLiteDatabase().insert(DBNAME , null , values)
         }
 
+        fun save(location: AMapLocation , pace : Int){
+            if (0L == SportParam.sportId){
+                return
+            }
+            val values = ContentValues()
+            values.put("bearing" , location.bearing)
+            values.put("speed" , location.speed)
+            values.put("accuracy" , location.accuracy)
+            values.put("latitude" , location.latitude)
+            values.put("longitude" , location.longitude)
+            values.put("time" , location.time)
+            values.put("sportId" , SportParam.sportId)
+            values.put("pace" , pace)
+
+            ISqliteDataBase.getSqLiteDatabase().insert(DBNAME , null , values)
+        }
+
         fun getTraceLocation(sportId : Long) : List<TraceLocation>{
             val list = ArrayList<TraceLocation>()
             var cursor : Cursor ?= null
@@ -115,6 +132,8 @@ class GpsInfoDbHelper {
             val latitude = CursorHelper.getDouble(cursor , "latitude")
             val longitude = CursorHelper.getDouble(cursor , "longitude")
             val time = CursorHelper.getLong(cursor , "time")
+            val pace = CursorHelper.getInt(cursor , "pace")
+
 
             val gpsInfo = GpsInfo()
             gpsInfo.bearing = bearing
@@ -122,6 +141,7 @@ class GpsInfoDbHelper {
             gpsInfo.latitude = latitude
             gpsInfo.longitude = longitude
             gpsInfo.time = time
+            gpsInfo.pace = pace
 
             return gpsInfo
         }
@@ -143,6 +163,7 @@ class GpsInfoDbHelper {
                 .addColumn_Double("longitude")
                 .addColumn_Long("time")
                 .addColumn_Float("sportId")
+                .addColumn_Integer("pace")
                 .buildTable(db)
         }
 

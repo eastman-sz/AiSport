@@ -12,6 +12,7 @@ class GpsInfo {
     var latitude = 0.0
     var longitude = 0.0
     var time = 0L
+    var pace = 0
 
     fun newLatLng() : LatLng{
         return LatLng(latitude , longitude)

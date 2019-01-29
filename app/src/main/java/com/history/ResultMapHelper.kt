@@ -8,12 +8,14 @@ import com.amap.api.maps.utils.SpatialRelationUtil
 import com.amap.api.maps.utils.overlay.SmoothMoveMarker
 import com.application.IApplication
 import com.sportdata.GpsInfo
+import com.sportdata.GpsPaceColorUtils
 import com.util.ILog
 import com.utils.lib.ss.info.DeviceInfo
 import com.zz.sport.ai.R
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ResultMapHelper {
 
@@ -66,8 +68,8 @@ class ResultMapHelper {
             var subList = ArrayList<LatLng>()
 
             //正常Gps点
-            val list0 = LinkedList<List<LatLng>>()
-            var subList0 = LinkedList<LatLng>()
+            val list0 = LinkedList<List<GpsInfo>>()
+            var subList0 = LinkedList<GpsInfo>()
 
             val size = points.size -1
             for (i in 0 until size){
@@ -98,10 +100,10 @@ class ResultMapHelper {
 
                     //正常Gps点
                     if (subList0.isEmpty()){
-                        subList0.add(points[i].newLatLng())
-                        subList0.add(points[i + 1].newLatLng())
+                        subList0.add(points[i])
+                        subList0.add(points[i + 1])
                     }else{
-                        subList0.add(points[i + 1].newLatLng())
+                        subList0.add(points[i + 1])
                     }
 
                 }
@@ -120,7 +122,14 @@ class ResultMapHelper {
                 //正常Gps点
                 list0.forEach {
                     if (it.size >= 2){
-                        val ooPolyline = polylineOptions(it)
+                        val colorValues = colorValues(it)
+
+                        val points = ArrayList<LatLng>()
+                        it.forEach {
+                            points.add(it.newLatLng())
+                        }
+
+                        val ooPolyline = polylineOptions(points , colorValues)
                         aMap?.addPolyline(ooPolyline)
                     }
 
@@ -131,9 +140,10 @@ class ResultMapHelper {
     }
 
     //正常Gps点边线
-    private fun polylineOptions(points: List<LatLng>) : PolylineOptions{
+    private fun polylineOptions(points: List<LatLng> , colorValues : List<Int>) : PolylineOptions{
         return  PolylineOptions().width(DeviceInfo.dip2px(IApplication.context, 5f).toFloat())
                 .addAll(points)
+                .colorValues(colorValues)
                 .color(IApplication.context!!.resources.getColor(R.color.c18))
                 .useGradient(true)
                 .zIndex(10f)
@@ -149,6 +159,16 @@ class ResultMapHelper {
                .zIndex(10f)
     }
 
+    //colorValues点对应的色值
+    private fun colorValues(gpsInfos : List<GpsInfo>) : List<Int>{
+        val colorValues = ArrayList<Int>()
+        gpsInfos.forEach {
+            val pace = it.pace
+            val color = GpsPaceColorUtils.getPaceColor(pace)
+            colorValues.add(color)
+        }
+        return colorValues
+    }
 
     //画起点
     private fun setStartPoint(latLng: LatLng) {

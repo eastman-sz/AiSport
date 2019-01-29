@@ -12,8 +12,28 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
     >
+        <com.common.base.CustomFontTextView
+                android:id="@+id/kmSeqTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="11"
+                android:paddingLeft="15dp"
+                android:textColor="@color/sfs_c10"
+                android:textSize="@dimen/sfs_s4"
+                />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/transparent"
+        >
+
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -90,7 +90,7 @@ public class LocationService extends NotiService {
                     //send
                     SportBroadcastHelper.Companion.sendSportId(SportParam.Companion.getSportId());
                     //保存GPS点
-                    GpsInfoDbHelper.Companion.save(location);
+                    GpsInfoDbHelper.Companion.save(location , sportDataCalHelper.getPace());
                     //更新距离
                     SportInfoDbHelper.Companion.onUpdateDistance(totalDistance);
                     //更新每公里信息

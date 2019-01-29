@@ -5,6 +5,50 @@
     <color name="colorAccent">#D81B60</color>
 
 
+
+    <color name="transparent">#00000000</color> <!-- 透明 -->
+    <color name="white">#ffffff</color> <!-- 白色 -->
+
+    <!-- 上拉下拉刷新文字颜色 -->
+    <color name="refresh_tip_color">#646464</color>
+    <color name="refresh_time_color">#afafaf</color>
+    <!-- 共通背景 -->
+    <color name="common_color1">#FFFFFF</color>
+    <!-- wheelview -->
+    <color name="wheelview_c12">#464754</color>
+
+    <color name="sfs_c1">#FFFFFF</color>
+    <color name="sfs_c2">#ADADAD</color>
+    <color name="sfs_c3">#FC6161</color>
+    <color name="sfs_c4">#464754</color>
+    <color name="sfs_c5">#505050</color>
+    <color name="sfs_c6">#ECECEC</color>
+    <color name="sfs_c7">#878787</color>
+    <color name="sfs_c8">#CCCCCC</color>
+    <color name="sfs_c9">#DCDCDC</color>
+    <color name="sfs_c10">#1D1D26</color>
+    <color name="sfs_c11">#007AFF</color>
+    <color name="sfs_c12">#000000</color>
+    <color name="sfs_c13">#F4F5F4</color>
+
+    <color name="sfs_c111">#FC6161</color>
+    <color name="sfs_c112">#EC6167</color>
+    <color name="sfs_page_bg_color">#F4F5F4</color>
+    <color name="sfs_c119">#C5C6CC</color>
+    <color name="sfs_c120">#F3F3F3</color>
+    <color name="sfs_c121">#8E8F99</color>
+
     <color name="c18">#FF647A</color>
+
+    <!-- ============运动配速的色值，由快到慢========================================== -->
+    <color name="path_color_c1">#FF0600</color>
+    <color name="path_color_c2">#FC4300</color>
+    <color name="path_color_c3">#F97E00</color>
+    <color name="path_color_c4">#F5C200</color>
+    <color name="path_color_c5">#F1FC00</color>
+    <color name="path_color_c6">#B4FF00</color>
+    <color name="path_color_c7">#7CFF00</color>
+    <color name="path_color_c8">#47FF00</color>
+    <color name="path_color_c9">#03FF00</color>
 
 </resources>
