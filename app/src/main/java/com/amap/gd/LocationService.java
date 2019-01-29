@@ -95,6 +95,8 @@ public class LocationService extends NotiService {
                     SportInfoDbHelper.Companion.onUpdateDistance(totalDistance);
                     //更新每公里信息
                     sportDataCalHelper.onDistanceChange(totalDistance , latLng);
+                    //更新配速信息
+                    SportInfoDbHelper.Companion.onUpdatePaceInfo(sportDataCalHelper.getMinPace() , sportDataCalHelper.getMaxPace());
                 }
             }
         });

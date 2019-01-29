@@ -40,6 +40,16 @@ class SportInfoDbHelper {
             ISqliteDataBase.getSqLiteDatabase().update(DBNAME , values , "sportId = ? " , arrayOf(SportParam.sportId.toString()))
         }
 
+        fun onUpdatePaceInfo(minPace : Int , maxPace : Int){
+            val values = ContentValues()
+            values.put("sportId" , SportParam.sportId)
+            values.put("avgPace" , (minPace + maxPace)/2)
+            values.put("maxPace" , maxPace)
+            values.put("minPace" , minPace)
+
+            ISqliteDataBase.getSqLiteDatabase().update(DBNAME , values , "sportId = ? " , arrayOf(SportParam.sportId.toString()))
+        }
+
         fun onFinish(){
             val values = ContentValues()
             values.put("sportId" , SportParam.sportId)
@@ -117,6 +127,10 @@ class SportInfoDbHelper {
             val endTime = CursorHelper.getLong(cursor , "endTime")
             val complete = CursorHelper.getInt(cursor , "complete")
             val distance = CursorHelper.getFloat(cursor , "distance")
+            val avgPace = CursorHelper.getInt(cursor , "avgPace")
+            val maxPace = CursorHelper.getInt(cursor , "maxPace")
+            val minPace = CursorHelper.getInt(cursor , "minPace")
+            val calorie = CursorHelper.getInt(cursor , "calorie")
 
             val sportInfo = SportInfo()
             sportInfo.sportId = sportId
@@ -124,6 +138,10 @@ class SportInfoDbHelper {
             sportInfo.endTime = endTime
             sportInfo.complete = complete
             sportInfo.distance = distance
+            sportInfo.avgPace = avgPace
+            sportInfo.maxPace = maxPace
+            sportInfo.minPace = minPace
+            sportInfo.calorie = calorie
 
             return sportInfo
         }
@@ -137,6 +155,10 @@ class SportInfoDbHelper {
                 .addColumn_Long("endTime")
                 .addColumn_Integer("complete")
                 .addColumn_Float("distance")
+                .addColumn_Integer("avgPace")
+                .addColumn_Integer("maxPace")
+                .addColumn_Integer("minPace")
+                .addColumn_Integer("calorie")
                 .buildTable(db)
         }
 

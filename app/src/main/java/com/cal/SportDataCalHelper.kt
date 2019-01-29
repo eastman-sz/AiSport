@@ -13,6 +13,8 @@ class SportDataCalHelper {
     private var distance = 0.0
     //配速:一公里把需要的时间
     var pace = 0
+    var maxPace = 0 //最高配速
+    var minPace = 0 //最低配速
     //上一公里时所花费的时长
     private var lastKmDuration = 0
     //上一公里计算时的距离(有可能公里不是连续的)
@@ -68,6 +70,11 @@ class SportDataCalHelper {
 
             //更新DB
             KmInfoDbHelper.save(curKm , curKmDuration , latLng?.latitude!! , latLng?.longitude!! , curKmSteps)
+
+            //更新最高和最低配速
+            minPace = if (pace > minPace) pace else minPace
+            maxPace = if (pace < maxPace) pace else  maxPace
+
         }else{
             //不足一公里时，计算配速
             val curDuration = duration - lastKmDuration
@@ -81,6 +88,16 @@ class SportDataCalHelper {
             }
             //当前配速
             pace = ((1000*curDuration)/curDistance).toInt()
+
+            //初始值
+            if (0 == minPace || 0 == maxPace){
+                minPace = 0
+                maxPace = 0
+            }
+
+            //更新最高和最低配速
+            minPace = if (pace > minPace) pace else minPace
+            maxPace = if (pace < maxPace) pace else  maxPace
         }
 
     }

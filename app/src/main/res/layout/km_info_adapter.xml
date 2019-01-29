@@ -7,35 +7,62 @@
         android:layout_height="wrap_content"
         tools:context=".MainActivity"
         android:orientation="vertical"
+        android:background="@color/transparent"
 >
 
-    <LinearLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="vertical"
+            android:background="@drawable/list_item_selector"
     >
-        <com.common.base.CustomFontTextView
-                android:id="@+id/kmSeqTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="11"
-                android:paddingLeft="15dp"
-                android:textColor="@color/sfs_c10"
-                android:textSize="@dimen/sfs_s4"
-                />
-
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/transparent"
+                android:layout_centerVertical="true"
         >
+            <com.common.base.CustomFontTextView
+                    android:id="@+id/kmSeqTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="11"
+                    android:paddingLeft="15dp"
+                    android:textColor="@color/sfs_c10"
+                    android:textSize="@dimen/sfs_s5"
+            />
 
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/transparent"
+                    android:layout_marginTop="5dp"
+            >
+                <com.common.base.CustomFontTextView
+                        android:id="@+id/durationTextView"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/sfs_c7"
+                        android:paddingLeft="15dp"
+                        android:textSize="@dimen/sfs_s3"
+                        android:text="时长: 12:15:18"
+                />
 
-
+                <com.common.base.CustomFontTextView
+                        android:id="@+id/stepsTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/sfs_c7"
+                        android:paddingLeft="15dp"
+                        android:textSize="@dimen/sfs_s3"
+                        android:text="步数:15"
+                />
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView style="@style/full_line_style"/>
 
