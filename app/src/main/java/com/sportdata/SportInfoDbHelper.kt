@@ -36,6 +36,10 @@ class SportInfoDbHelper {
             val values = ContentValues()
             values.put("sportId" , SportParam.sportId)
             values.put("distance" , distance)
+            //计算卡路里
+            val duration = System.currentTimeMillis()/1000 - SportParam.sportId
+            val calorie = CalorieCalHelper.getRunningCalorieByDis(distance , duration.toInt()).toInt()
+            values.put("calorie" , calorie)
 
             ISqliteDataBase.getSqLiteDatabase().update(DBNAME , values , "sportId = ? " , arrayOf(SportParam.sportId.toString()))
         }
