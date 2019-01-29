@@ -11,21 +11,15 @@
     <com.amap.api.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_marginBottom="160dp"
+    />
 
-
-    <com.common.base.CustomFontTextView
-            android:id="@+id/detailTextView"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+    <com.history.SportDetailShortInfoView
+            android:id="@+id/sportDetailShortInfoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:background="@color/sfs_c5"
-            android:alpha="0.3"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sfs_s4"
-            android:text="Detail"
     />
 
 </RelativeLayout>

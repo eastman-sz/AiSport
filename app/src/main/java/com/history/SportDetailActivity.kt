@@ -64,14 +64,18 @@ class SportDetailActivity : AppCompatActivity() {
                 })
             }
         }
+
+        sportDetailShortInfoView.setSportInfo(sportId)
     }
 
     private fun initListeners(){
-        detailTextView.setOnClickListener {
+/*        detailTextView.setOnClickListener {
             val dialog = SportDetailDialog(this)
             dialog.show()
             dialog.setSportId(sportId)
-        }
+        }*/
+
+
     }
 
     override fun onPause() {

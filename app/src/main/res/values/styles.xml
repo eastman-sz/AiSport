@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="pace_horizontal_progress_bar" parent="android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/share_pace_horizontal_progress_layer_list</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+    </style>
+
 </resources>
