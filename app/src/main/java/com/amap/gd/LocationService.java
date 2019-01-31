@@ -13,6 +13,8 @@ import com.gaode.GdLocationListenerHelper;
 import com.gaode.LatLngState;
 import com.gaode.OnGdLocationChangeListener;
 import com.gaode.SportParam;
+import com.noti.Msg;
+import com.noti.NotiHelper;
 import com.sportdata.GpsInfoDbHelper;
 import com.sportdata.SportInfo;
 import com.sportdata.SportInfoDbHelper;
@@ -60,6 +62,8 @@ public class LocationService extends NotiService {
     //计步器
     private StepDetectorHelper stepDetectorHelper = null;
 
+    private Msg msg = new Msg();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -74,6 +78,15 @@ public class LocationService extends NotiService {
                 SportInfoDbHelper.Companion.onUpdate();
                 //更新每公里信息
                 sportDataCalHelper.onDurationChange(count);
+
+                //更新通知栏
+                if (0 == count%5){
+                    msg.setDuration(count);
+                    msg.setDistance(sportDataCalHelper.getDistance());
+                    msg.setPace(sportDataCalHelper.getPace());
+
+                    NotiHelper.Companion.showNoti(msg);
+                }
 
             }
         });
@@ -152,6 +165,9 @@ public class LocationService extends NotiService {
         stopSelf();
         //停止计步器
         stepDetectorHelper.onStop();
+
+        //取消通知栏
+        NotiHelper.Companion.cancelNotis();
         super.onDestroy();
     }
 

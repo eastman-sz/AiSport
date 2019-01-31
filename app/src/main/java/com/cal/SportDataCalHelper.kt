@@ -10,7 +10,7 @@ class SportDataCalHelper {
     constructor()
 
     private var duration = 0
-    private var distance = 0.0
+    var distance = 0.0
     //配速:一公里把需要的时间
     var pace = 0
     var maxPace = 0 //最高配速
