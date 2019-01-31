@@ -12,22 +12,24 @@
     <Button
             android:id="@+id/sportBtn"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="52dp"
             android:text="运动"
     />
 
     <Button
             android:id="@+id/historyBtn"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="52dp"
             android:text="记录"
+            android:layout_marginTop="10dp"
     />
 
     <Button
             android:id="@+id/jniBtn"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="52dp"
             android:text="JNI"
+            android:layout_marginTop="10dp"
     />
 
 </LinearLayout>
