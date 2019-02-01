@@ -13,6 +13,9 @@ import com.gaode.GdLocationListenerHelper;
 import com.gaode.LatLngState;
 import com.gaode.OnGdLocationChangeListener;
 import com.gaode.SportParam;
+import com.lockscreen.LockScreenActivity;
+import com.lockscreen.OnScreenStateListener;
+import com.lockscreen.ScreenStateBroadcastReceiver;
 import com.noti.Msg;
 import com.noti.NotiHelper;
 import com.sportdata.GpsInfoDbHelper;
@@ -121,6 +124,28 @@ public class LocationService extends NotiService {
                 if (2 == type){
                     sportDataCalHelper.onStepsChange(value);
                 }
+            }
+        });
+
+        ScreenStateBroadcastReceiver screenStateBroadcastReceiver = new ScreenStateBroadcastReceiver();
+        screenStateBroadcastReceiver.setOnScreenStateListener(new OnScreenStateListener() {
+            @Override
+            public void onScreenOn() {
+                ILog.Companion.e("-----------页面----onScreenOn-------------------");
+            }
+
+            @Override
+            public void onScreenOff() {
+                ILog.Companion.e("-----------页面----onScreenOff-------------------");
+
+                startActivity(new Intent(getApplicationContext() , LockScreenActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                );
+            }
+
+            @Override
+            public void onUserPresent() {
+                ILog.Companion.e("-----------页面----onUserPresent-------------------");
             }
         });
     }

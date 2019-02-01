@@ -131,9 +131,18 @@
                 <action android:name="com.ai.locationservice.LocationHelperService"/>
             </intent-filter>
         </service>
-        <activity android:name="com.noti.NotiActivity"
+
+        <activity
+                android:name="com.noti.NotiActivity"
+                android:screenOrientation="portrait"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <activity android:name="com.lockscreen.LockScreenActivity"
+                  android:configChanges="keyboardHidden|orientation|screenSize"
                   android:screenOrientation="portrait"
-                  android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+                  android:windowSoftInputMode="adjustResize|stateHidden"
+        />
+
     </application>
 
 </manifest>
