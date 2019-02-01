@@ -188,7 +188,7 @@ public class LocationService extends NotiService {
         //结束运动记录
         SportInfoDbHelper.Companion.onFinish();
 
-        //调用stopSelf()会重置LocationService里的变量
+        //调用stopSelf()会重置LocationService里的变量d
         stopSelf();
         //停止计步器
         stepDetectorHelper.onStop();
