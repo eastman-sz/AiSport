@@ -67,6 +67,8 @@ public class LocationService extends NotiService {
 
     private Msg msg = new Msg();
 
+    private ScreenStateBroadcastReceiver screenStateBroadcastReceiver = new ScreenStateBroadcastReceiver();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -127,7 +129,7 @@ public class LocationService extends NotiService {
             }
         });
 
-        ScreenStateBroadcastReceiver screenStateBroadcastReceiver = new ScreenStateBroadcastReceiver();
+
         screenStateBroadcastReceiver.setOnScreenStateListener(new OnScreenStateListener() {
             @Override
             public void onScreenOn() {
@@ -193,6 +195,8 @@ public class LocationService extends NotiService {
 
         //取消通知栏
         NotiHelper.Companion.cancelNotis();
+
+        screenStateBroadcastReceiver.unRegister();
         super.onDestroy();
     }
 
