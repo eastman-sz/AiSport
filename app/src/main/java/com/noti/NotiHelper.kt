@@ -79,7 +79,7 @@ class NotiHelper {
             val notification = builder.build()
             notification.flags = notification.flags or Notification.FLAG_ONGOING_EVENT
             notification.flags = Notification.FLAG_AUTO_CANCEL
-            notification.vibrate = longArrayOf(500, 1)
+//            notification.vibrate = longArrayOf(500, 1)
 
             manager?.notify(notificationId, notification)
         }
