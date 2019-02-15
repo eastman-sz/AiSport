@@ -89,6 +89,10 @@ class NotiHelper {
         @TargetApi(Build.VERSION_CODES.O)
         private fun createNotificationChannel(channelId : String , channelName : String , importance : Int){
             val channel = NotificationChannel(channelId , channelName , importance)
+            //设置通知出现时不震动
+            channel.enableVibration(false)
+            channel.vibrationPattern = longArrayOf(0)
+
             manager?.createNotificationChannel(channel)
         }
 
