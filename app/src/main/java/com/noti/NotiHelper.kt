@@ -10,7 +10,6 @@ import android.content.Intent
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.provider.Settings
-import com.amap.locationservicedemo.JniMapActivity
 import com.application.IApplication
 import com.util.DateUtil
 import com.utils.lib.ss.common.MathUtil

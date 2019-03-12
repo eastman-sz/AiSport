@@ -9,6 +9,7 @@ import com.application.IApplication
 class ScreenStateBroadcastReceiver : BroadcastReceiver {
 
     var onScreenStateListener : OnScreenStateListener ?= null
+    private var hasRegistered = false
 
     constructor(){
         register()
@@ -20,10 +21,17 @@ class ScreenStateBroadcastReceiver : BroadcastReceiver {
         filter.addAction(Intent.ACTION_SCREEN_OFF) // 锁屏
         filter.addAction(Intent.ACTION_USER_PRESENT) // 解锁
         IApplication.context?.registerReceiver(this , filter)
+
+        hasRegistered = true
     }
 
     fun unRegister(){
-        IApplication.context?.unregisterReceiver(this)
+        if (hasRegistered){
+            IApplication.context?.unregisterReceiver(this)
+
+            hasRegistered = false
+        }
+
     }
 
     override fun onReceive(context: Context, intent: Intent) {
