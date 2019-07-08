@@ -2,6 +2,7 @@ package com.application
 
 import android.content.Context
 import android.support.multidex.MultiDexApplication
+import com.smilefuns.sdk.ad.MobileAdsHelper
 import com.utils.lib.ss.common.StrictModeHelper
 
 class IApplication : MultiDexApplication() {
@@ -11,6 +12,8 @@ class IApplication : MultiDexApplication() {
         context = this
 
         StrictModeHelper.initStrictMode()
+        //mobile
+        MobileAdsHelper.init(this)
     }
 
     companion object {

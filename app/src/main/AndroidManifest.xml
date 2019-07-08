@@ -65,19 +65,25 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:usesCleartextTraffic="true">
 
+        <activity android:name="com.start.StartActivity"
+                  android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustResize|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity
                 android:name=".MainActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustResize|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                android:windowSoftInputMode="adjustResize|stateHidden"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity> <!-- 设置key -->
+         <!-- 设置key -->
         <meta-data
                 android:name="com.amap.api.v2.apikey"
                 android:value="7c32f5f9d228161e820a34427ade501f"/> <!-- 定位需要的服务 -->
@@ -136,13 +142,11 @@
                 android:name="com.noti.NotiActivity"
                 android:screenOrientation="portrait"
                 android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-
-        <activity android:name="com.lockscreen.LockScreenActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="adjustResize|stateHidden"
-        />
-
+        <activity
+                android:name="com.lockscreen.LockScreenActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustResize|stateHidden"/>
     </application>
 
 </manifest>
