@@ -56,24 +56,36 @@ class NotiHelper {
         }
 
 
+        var iRemoteViews6 : IRemoteViews ?= null
+
         //8.0以下
         private fun notiBelowO(msg : Msg){
             val context = IApplication.context
 
-/*            val clickIntent = Intent(context, NotiActivity::class.java)
+            //-------跳转的页面---------------
+            val clickIntent = Intent(context , NotiActivity::class.java)
             clickIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            clickIntent.putExtra("msgId" , msg.mc_id)*/
 
-//            val intents = arrayOf(clickIntent)
-//            val contentIntent = PendingIntent.getActivities(IApplication.getContext(), 0, intents, PendingIntent.FLAG_CANCEL_CURRENT)
+            val intents = arrayOf(clickIntent)
+            val contentIntent = PendingIntent.getActivities(context, 0, intents, PendingIntent.FLAG_UPDATE_CURRENT)
+
+            if (null == iRemoteViews6){
+                iRemoteViews6 = IRemoteViews()
+            }
+
+            iRemoteViews6?.setTextViewText(R.id.durationTextView , if (0 == msg.duration) "--" else DateUtil.secondsFormatHours1(msg.duration))
+            iRemoteViews6?.setTextViewText(R.id.distanceTextView , if (0.0 == msg.distance) "--" else MathUtil.meter2KmF(msg.distance.toFloat()).toString())
+            iRemoteViews6?.setTextViewText(R.id.paceTextView , if (0 == msg.pace) "--" else DateUtil.seconds2RunningPace(msg.pace))
 
             val builder = Notification.Builder(context)
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setPriority(Notification.PRIORITY_MAX)
-                    .setWhen(System.currentTimeMillis())
-                    .setContentTitle(msg.title)
-                    .setContentText(msg.content)
-//                    .setContentIntent(contentIntent)
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setPriority(Notification.PRIORITY_MAX)
+                .setWhen(System.currentTimeMillis())
+//                    .setTicker(msg.title)
+//                    .setContentTitle("时长" +msg.duration)
+//                    .setContentText(msg.content)
+                .setContentIntent(contentIntent)
+                .setContent(iRemoteViews6)
 
             val notification = builder.build()
             notification.flags = notification.flags or Notification.FLAG_ONGOING_EVENT
